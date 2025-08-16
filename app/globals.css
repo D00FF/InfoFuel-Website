@@ -1,0 +1,64 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Global styles for InfoFuel Fire Theme */
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  @apply bg-white text-gray-900 font-sans antialiased;
+  line-height: 1.6;
+}
+
+/* Smooth transitions for all interactive elements */
+a, button {
+  transition: all 0.3s ease-in-out;
+}
+
+/* Typography improvements */
+h1, h2, h3, h4, h5, h6 {
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+}
+
+/* Gradient brand utility */
+.bg-infofuel-gradient {
+  @apply bg-gradient-to-r from-orange-500 to-red-600;
+}
+
+/* Ember glow effect */
+.ember-glow {
+  box-shadow: 0 0 20px rgba(249, 115, 22, 0.6),
+              0 0 40px rgba(220, 38, 38, 0.4);
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #fef3c7; /* light amber */
+}
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(to bottom, #f97316, #dc2626);
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(to bottom, #fb923c, #ef4444);
+}
+
+/* Text selection styling */
+::selection {
+  background-color: rgba(249, 115, 22, 0.2); /* orange highlight */
+  color: #111827;
+}
+
+/* Focus styles for accessibility */
+button:focus,
+a:focus {
+  outline: 2px solid #f97316; /* brand orange */
+  outline-offset: 2px;
+}
