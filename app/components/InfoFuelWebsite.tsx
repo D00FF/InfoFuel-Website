@@ -1,5 +1,6 @@
 'use client';
 
+import CalEmbed from './CalEmbed';
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { ChevronRight, Phone, Target, Settings, Zap } from 'lucide-react';
@@ -432,35 +433,24 @@ const InfoFuelWebsite = () => {
 
       {/* BOOK A CALL */}
       <Section id="book-call">
-        <div className="mx-auto max-w-2xl text-center">
-          <h2 className="mb-4 text-4xl font-bold">
-            <span className="bg-gradient-to-r from-fuel-orange to-fuel-red bg-clip-text text-transparent">
-              Let’s Build Your Growth Engine
-            </span>
-          </h2>
-          <p className="mb-10 text-lg text-gray-300">
-            Book a free strategy call to see how InfoFuel can install the systems, sales, and structure your brand needs.
-          </p>
+  <div className="mx-auto max-w-3xl text-center">
+    <h2 className="mb-4 text-4xl font-bold">
+      <span className="bg-gradient-to-r from-fuel-orange to-fuel-red bg-clip-text text-transparent">
+        Let’s Build Your Growth Engine
+      </span>
+    </h2>
+    <p className="mb-10 text-lg text-gray-300">
+      Book a free strategy call to see how InfoFuel can install the systems, sales, and structure your brand needs.
+    </p>
 
-          <div className="mb-6 rounded-2xl border border-white/10 bg-white/[0.06] p-8 backdrop-blur-sm">
-            <Phone className="mx-auto mb-4 h-10 w-10 text-fuel-ember" />
-            <p className="mb-4 text-gray-300">Choose a time that works for you:</p>
-            {['Mon, Aug 11 - 2PM', 'Tue, Aug 12 - 10AM', 'Wed, Aug 13 - 3PM'].map((t, i) => (
-              <div
-                key={i}
-                className="mb-2 cursor-pointer rounded-lg border border-white/10 p-3 text-white transition hover:border-fuel-ember/50 hover:bg-white/[0.08]"
-              >
-                {t}
-              </div>
-            ))}
-          </div>
+    {/* 👇 Replace the old placeholder panel with this */}
+    <CalEmbed calLink="infofuel/30min" height="720px" />
 
-          <button className="rounded-lg bg-gradient-to-r from-fuel-orange to-fuel-red px-8 py-4 text-lg font-semibold text-white shadow-[0_10px_30px_-10px_rgba(230,57,70,0.6)] transition hover:opacity-90">
-            Book Your Call
-          </button>
-        </div>
-      </Section>
-
+    <p className="mt-4 text-sm text-gray-400">
+      Having trouble? <a href="https://cal.com/infofuel/30min" className="underline hover:text-white">Open in a new tab</a>.
+    </p>
+  </div>
+</Section>
       {/* FOOTER */}
       <footer className="relative overflow-hidden border-t border-white/[0.06] py-16">
         <Container>
