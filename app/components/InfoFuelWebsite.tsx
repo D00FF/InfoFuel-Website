@@ -4,6 +4,7 @@ import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { ChevronRight, Phone, Target, Settings, Zap } from 'lucide-react';
 import Image from 'next/image';
+import { div } from 'framer-motion/client';
 
 type Counters = {
   cash: number;
