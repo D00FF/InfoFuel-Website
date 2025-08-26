@@ -455,7 +455,7 @@ const InfoFuelWebsite = () => {
     </p>
 
     {/* Full-width Cal embed */}
-    <CalEmbed calLink="infofuel.ca/30min" height="900px" />
+    <CalEmbed calLink="infofuel.ca/30min" height="720px" />
 
     <p className="mt-4 text-center text-sm text-gray-400">
       Having trouble?{" "}
