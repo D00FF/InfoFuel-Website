@@ -444,7 +444,7 @@ const InfoFuelWebsite = () => {
     </p>
 
     {/* 👇 Replace the old placeholder panel with this */}
-    <CalEmbed calLink="/infofuel/30min" height="720px" />
+    <CalEmbed calLink="infofuel.ca/30min" height="720px" />
 
     <p className="mt-4 text-sm text-gray-400">
       Having trouble? <a href="https://cal.com/infofuel/30min" className="underline hover:text-white">Open in a new tab</a>.
