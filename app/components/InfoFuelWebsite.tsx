@@ -65,8 +65,19 @@ const InfoFuelWebsite = () => {
     <div className="mx-auto max-w-7xl px-6 lg:px-8">{children}</div>
   );
 
-  const Section = ({ id, children }: { id: string; children: React.ReactNode }) => (
-    <section id={id} className="relative overflow-hidden py-24">
+  const Section = ({
+    id,
+    children,
+    bg,
+  }: {
+    id: string;
+    children: React.ReactNode;
+    bg?: string;
+  }) => (
+    <section
+      id={id}
+      className={`relative overflow-hidden py-24 ${bg ? bg : ''}`}
+    >
       {/* subtle section top sheen to blend into previous */}
       <div className="pointer-events-none absolute inset-x-0 top-0 h-16 bg-gradient-to-b from-white/5 to-transparent" />
       {/* ember field (light) */}
@@ -433,21 +444,29 @@ const InfoFuelWebsite = () => {
 
       {/* BOOK A CALL */}
       <Section id="book-call">
-  <div className="mx-auto max-w-3xl text-center">
-    <h2 className="mb-4 text-4xl font-bold">
+  <div className="mx-auto w-full max-w-7xl px-4 lg:px-8">
+    <h2 className="mb-4 text-center text-4xl font-bold">
       <span className="bg-gradient-to-r from-fuel-orange to-fuel-red bg-clip-text text-transparent">
         Let’s Build Your Growth Engine
       </span>
     </h2>
-    <p className="mb-10 text-lg text-gray-300">
+    <p className="mb-10 text-center text-lg text-gray-300">
       Book a free strategy call to see how InfoFuel can install the systems, sales, and structure your brand needs.
     </p>
 
-    {/* 👇 Replace the old placeholder panel with this */}
-    <CalEmbed calLink="infofuel.ca/30min" height="720px" />
+    {/* Full-width Cal embed */}
+    <CalEmbed calLink="infofuel.ca/30min" height="900px" />
 
-    <p className="mt-4 text-sm text-gray-400">
-      Having trouble? <a href="https://cal.com/infofuel/30min" className="underline hover:text-white">Open in a new tab</a>.
+    <p className="mt-4 text-center text-sm text-gray-400">
+      Having trouble?{" "}
+      <a
+        href="https://cal.com/infofuel.ca/30min"
+        className="underline hover:text-white"
+        target="_blank"
+        rel="noreferrer"
+      >
+        Open in a new tab
+      </a>
     </p>
   </div>
 </Section>

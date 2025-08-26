@@ -12,7 +12,7 @@ type Props = {
   height?: string;
 };
 
-export default function CalEmbed({ calLink, namespace = 'bookcall', height = '700px' }: Props) {
+export default function CalEmbed({ calLink, namespace = 'bookcall', height = '880px' }: Props) {
   useEffect(() => {
     (async () => {
       const cal = await getCalApi({ namespace });
