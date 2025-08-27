@@ -420,9 +420,9 @@ const InfoFuelWebsite = () => {
         </div>
         <div className="mx-auto grid max-w-5xl gap-8 md:grid-cols-3">
           {[
-            { name: 'Phineas', role: 'CEO', image: '/team-ceo.png' },
-            { name: 'Ferb', role: 'COO', image: '/team-cso.png' },
-            { name: 'Doofenshmirtz', role: 'Sales', image: '/team-coo.png' },
+            { name: 'Daryll', role: 'CEO', image: '/team-ceo.png' },
+            { name: 'Jamal', role: 'COO', image: '/team-cso.png' },
+            { name: 'Kyle', role: 'Sales', image: '/team-coo.png' },
           ].map((m, i) => (
             <motion.div key={i} whileHover={{ y: -4 }} className="text-center">
               <div className="mx-auto mb-5 h-56 w-56 overflow-hidden rounded-full ring-4 ring-white/10 shadow-[0_10px_40px_-10px_rgba(255,146,72,0.25)]">
