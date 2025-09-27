@@ -1,6 +1,6 @@
 "use client";
 
-import CalEmbed from './CalEmbed';
+import CalEmbed from "./CalEmbed";
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { ChevronRight, Phone, Target, Settings, Zap, Container, Section } from 'lucide-react';
