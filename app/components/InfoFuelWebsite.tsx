@@ -187,26 +187,33 @@ const InfoFuelWebsite = () => {
         <div className="pointer-events-none absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-white/5 to-transparent" />
       </section>
 
-{/* ===== Example Landing Page (place right under the hero) ===== */}
+{/* ===== Example Landing Page (seamless blend) ===== */}
 <section
-  id="Example Landing Page">
+  id="Example Landing Page"
+  className="relative overflow-hidden py-24"
+>
+  {/* match the standard top sheen used elsewhere */}
+  <div className="pointer-events-none absolute inset-x-0 top-0 h-16 bg-gradient-to-b from-white/5 to-transparent" />
+  {/* match the ember field opacity used in other sections */}
+  <div className="pointer-events-none absolute inset-0 bg-embers opacity-[0.18]" />
+
+  <div className="relative z-10 mx-auto max-w-6xl px-6 lg:px-8">
+    {/* Label / Title / Subtitle — same pattern as other sections */}
     <div className="mb-12 text-center">
-          <h2 className="text-sm font-semibold uppercase tracking-widest text-fuel-ember">Example Landing Page</h2>
-          <h3 className="mb-4 text-4xl font-bold">Professionally Built Landing Page</h3>
-          <p className="text-lg text-gray-300">
-            Take a look at what we envision your landing page to look like
-          </p>
-        </div>
-
-  <div
-    aria-hidden
-    className="pointer-events-none absolute inset-x-0 -top-8 h-16 bg-gradient-to-b from-black/0 via-black/20 to-black/40"
-  />
-
-
+      <h2 className="text-sm font-semibold uppercase tracking-widest text-fuel-ember">
+        Example Landing Page
+      </h2>
+      <h3 className="mb-4 text-4xl font-bold">
+        Professionally Built Landing Page
+      </h3>
+      <p className="text-lg text-gray-300">
+        Take a look at what we envision your landing page to look like
+      </p>
+    </div>
+  </div>
 
     {/* Glass card preview — scaled down to ~half width */}
-    <div className="mx-auto mt-8 max-w-xl">
+    <div className="mx-auto mt-2 max-w-xl">
       <Link
         href="/template" /* change if your TemplatePage route differs */
         className="group block"
@@ -223,7 +230,7 @@ const InfoFuelWebsite = () => {
             style={{ background: "radial-gradient(50% 50% at 50% 50%, rgba(255,146,72,0.35), rgba(230,57,70,0.25), transparent 70%)" }}
           />
 
-          {/* Image (intentionally blurred/obscured) */}
+          {/* Blurred image */}
           <div className="relative">
             <Image
               src="/landingpagepreview.png"
@@ -235,20 +242,20 @@ const InfoFuelWebsite = () => {
             />
           </div>
 
-          {/* Bottom label — full-width opaque ember bar */}
+          {/* Full-width opaque ember label */}
           <figcaption className="absolute inset-x-0 bottom-0">
-            <div className="w-full bg-gradient-to-r from-orange-400 to-red-500 px-4 py-3 text-center text-sm font-semibold text-white">
+            <div className="w-full bg-gradient-to-r from-fuel-orange to-fuel-red px-4 py-3 text-center text-sm font-semibold text-white">
               Take a peak at your potential
             </div>
           </figcaption>
         </figure>
       </Link>
 
-      {/* Larger CTA button moved under the image */}
+      {/* Larger CTA below the image */}
       <div className="mt-6 flex justify-center">
         <Link
           href="/template"
-          className="inline-flex items-center gap-2 rounded-xl bg-gradient-to-r from-orange-400 to-red-500 px-6 py-3 text-base font-semibold text-white shadow-lg transition hover:opacity-90 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-0 focus-visible:ring-white/60"
+          className="inline-flex items-center gap-2 rounded-xl bg-gradient-to-r from-fuel-orange to-fuel-red px-6 py-3 text-base font-semibold text-white shadow-lg transition hover:opacity-90 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-0 focus-visible:ring-white/60"
         >
           View Example Page
           <svg className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
@@ -258,8 +265,11 @@ const InfoFuelWebsite = () => {
         </Link>
       </div>
     </div>
-    
+
+  {/* match the standard bottom sheen into next section */}
+  <div className="pointer-events-none absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-white/5 to-transparent" />
 </section>
+
 
 {/* PROCESS */}
 <Section id="process">
