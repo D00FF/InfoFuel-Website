@@ -3,9 +3,9 @@
 import CalEmbed from './CalEmbed';
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { ChevronRight, Phone, Target, Settings, Zap } from 'lucide-react';
+import { ChevronRight, Phone, Target, Settings, Zap, Container, Section } from 'lucide-react';
 import Image from 'next/image';
-import { div } from 'framer-motion/client';
+import { div, footer, section } from 'framer-motion/client';
 import Link from "next/link";
 
 
@@ -187,46 +187,41 @@ const InfoFuelWebsite = () => {
         <div className="pointer-events-none absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-white/5 to-transparent" />
       </section>
 
-        {/* ===== Example Landing Page (place right under the hero) ===== */}
-     <section id="Example Landing Page" className="relative py-16 sm:py-20">
+{/* ===== Example Landing Page (place right under the hero) ===== */}
+<section
+  id="Example Landing Page"
+  className="relative pt-12 pb-16 sm:pt-16 sm:pb-20"
+>
+  {/* top blend from hero */}
+  <div
+    aria-hidden
+    className="pointer-events-none absolute inset-x-0 -top-8 h-16 bg-gradient-to-b from-black/0 via-black/20 to-black/40"
+  />
+
+  {/* subtle ember background texture */}
   <div className="pointer-events-none absolute inset-0 bg-embers/10" />
 
-  <div className="mx-auto max-w-6xl px-6 lg:px-8 relative z-10">
-    {/* Ember Text */}
+  <div className="relative z-10 mx-auto max-w-6xl px-6 lg:px-8">
+    {/* Ember badge/label (mimic other sections) */}
     <div className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/10 px-4 py-1.5 text-xs font-medium text-white/90 backdrop-blur">
       <span className="h-1.5 w-1.5 rounded-full bg-gradient-to-r from-orange-400 to-red-500" />
       Example Landing Page
     </div>
 
-    {/* Heading + Sub */}
-    <div className="mt-4 flex flex-col items-start gap-2 sm:items-center">
+    {/* Title + Subtitle (mimic other sections) */}
+    <div className="mt-4 text-left sm:text-center">
       <h2 className="text-3xl font-extrabold tracking-tight sm:text-4xl text-white">
-        <span className="block">Professionally Built Landing Page</span>
+        Professionally Built Landing Page
       </h2>
-      <p className="max-w-2xl text-base text-gray-300 sm:text-lg text-left sm:text-center">
+      <p className="mt-2 text-base text-gray-300 sm:text-lg">
         Take a look at what we envision your landing page to look like
       </p>
-
-      {/* CTA Button */}
-      <div className="mt-6">
-        {/* Adjust href to your actual TemplatePage route if different */}
-        <Link
-          href="/TemplatePage.tsx"
-          className="inline-flex items-center gap-2 rounded-lg bg-gradient-to-r from-orange-400 to-red-500 px-5 py-3 text-sm font-semibold text-white shadow-lg transition hover:opacity-90 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-0 focus-visible:ring-white/60"
-        >
-          View Example Page
-          <svg className="h-4 w-4" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-            <path fillRule="evenodd" d="M10.22 3.22a.75.75 0 011.06 0l5.5 5.5a.75.75 0 010 1.06l-5.5 5.5a.75.75 0 11-1.06-1.06L14.94 10 10.22 5.28a.75.75 0 010-1.06z" clipRule="evenodd" />
-            <path fillRule="evenodd" d="M3 10a.75.75 0 01.75-.75h10.69a.75.75 0 010 1.5H3.75A.75.75 0 013 10z" clipRule="evenodd" />
-          </svg>
-        </Link>
-      </div>
     </div>
 
-    {/* Glass Card Preview (acts as a big button) */}
-    <div className="mt-10">
+    {/* Glass card preview — scaled down to ~half width */}
+    <div className="mx-auto mt-8 max-w-xl">
       <Link
-        href="/TemplatePage.tsx" /* <-- change if your route differs */
+        href="/template" /* change if your TemplatePage route differs */
         className="group block"
         aria-label="Open example landing page"
       >
@@ -235,43 +230,58 @@ const InfoFuelWebsite = () => {
                      transition [transform:translateZ(0)]
                      hover:shadow-[0_0_0_3px_rgba(255,255,255,0.06)] hover:border-white/20"
         >
-          {/* soft glow */}
+          {/* soft hover glow */}
           <div
             className="pointer-events-none absolute -inset-10 opacity-0 blur-2xl transition-opacity duration-500 group-hover:opacity-30"
             style={{ background: "radial-gradient(50% 50% at 50% 50%, rgba(255,146,72,0.35), rgba(230,57,70,0.25), transparent 70%)" }}
           />
 
-          {/* Image */}
+          {/* Image (intentionally blurred/obscured) */}
           <div className="relative">
             <Image
               src="/landingpagepreview.png"
               alt="Preview of a professionally built landing page"
-              width={2400}
-              height={1350}
+              width={1600}
+              height={900}
               priority
-              className="w-full h-auto object-cover transition-transform duration-500 group-hover:scale-[1.02]"
+              className="h-auto w-full object-cover blur-[6px] brightness-[0.7] contrast-[0.9] transition-transform duration-500 group-hover:scale-[1.02]"
             />
           </div>
 
-          {/* Bottom label */}
-          <figcaption
-            className="absolute inset-x-0 bottom-0 flex items-center justify-center
-                       bg-gradient-to-t from-black/60 via-black/20 to-transparent
-                       p-4"
-          >
-            <span className="rounded-full border border-white/15 bg-white/10 px-4 py-1.5 text-xs font-medium text-white/90 backdrop-blur transition group-hover:bg-white/15">
+          {/* Bottom label — full-width opaque ember bar */}
+          <figcaption className="absolute inset-x-0 bottom-0">
+            <div className="w-full bg-gradient-to-r from-orange-400 to-red-500 px-4 py-3 text-center text-sm font-semibold text-white">
               Take a peak at your potential
-            </span>
+            </div>
           </figcaption>
         </figure>
       </Link>
+
+      {/* Larger CTA button moved under the image */}
+      <div className="mt-6 flex justify-center">
+        <Link
+          href="/template"
+          className="inline-flex items-center gap-2 rounded-xl bg-gradient-to-r from-orange-400 to-red-500 px-6 py-3 text-base font-semibold text-white shadow-lg transition hover:opacity-90 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-0 focus-visible:ring-white/60"
+        >
+          View Example Page
+          <svg className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+            <path fillRule="evenodd" d="M10.22 3.22a.75.75 0 011.06 0l5.5 5.5a.75.75 0 010 1.06l-5.5 5.5a.75.75 0 11-1.06-1.06L14.94 10 10.22 5.28a.75.75 0 010-1.06z" clipRule="evenodd" />
+            <path fillRule="evenodd" d="M3 10a.75.75 0 01.75-.75h10.69a.75.75 0 010 1.5H3.75A.75.75 0 013 10z" clipRule="evenodd" />
+          </svg>
+        </Link>
+      </div>
     </div>
   </div>
+
+  {/* bottom blend into next section (e.g., Process) */}
+  <div
+    aria-hidden
+    className="pointer-events-none absolute inset-x-0 -bottom-10 h-20 bg-gradient-to-t from-black/0 via-black/20 to-black/60"
+  />
 </section>
 
-
-      {/* PROCESS */}
-      <Section id="process">
+{/* PROCESS */}
+<Section id="process">
         <div className="mb-12 text-center">
           <h2 className="text-sm font-semibold uppercase tracking-widest text-fuel-ember">Process</h2>
           <h3 className="mb-4 text-4xl font-bold">Your Path to Predictable Growth</h3>
