@@ -23,7 +23,7 @@ const InfoFuelWebsite = () => {
   });
 
   useEffect(() => {
-    const targets: Counters = { cash: 500, leads: 3000, deals: 800, years: 5 };
+    const targets: Counters = { cash: 570, leads: 3200, deals: 850, years: 4 };
     const duration = 2000;
     const stepMs = 50;
     const steps = duration / stepMs;
@@ -191,15 +191,15 @@ const InfoFuelWebsite = () => {
           <h2 className="text-sm font-semibold uppercase tracking-widest text-fuel-ember">Process</h2>
           <h3 className="mb-4 text-4xl font-bold">Your Path to Predictable Growth</h3>
           <p className="text-lg text-gray-300">
-            A done-for-you system that transforms creators into scalable, revenue-driven brands.
+            An all-in-one system that transforms niche brands into scalable, revenue-driven communities.
           </p>
         </div>
 
         <div className="grid gap-8 md:grid-cols-3">
           {[
-            { icon: Target, title: 'Strategic Offer Design', text: 'Nail your niche and build offers that convert.' },
-            { icon: Settings, title: 'Backend Systems', text: 'Let automation sell for you while you create.' },
-            { icon: Zap, title: 'Content-to-Sales Engine', text: 'Turn views into booked calls.' },
+            { icon: Target, title: 'Strategic Offer Design', text: 'Nail your niche by building high ticket offers that convert.' },
+            { icon: Settings, title: 'Automated Backend Systems', text: 'Let a proven sales system do the selling while you create.' },
+            { icon: Zap, title: 'Content-to-Sales Engine', text: 'Start turning views into booked calls.' },
           ].map((item, i) => (
             <motion.div
               key={i}
@@ -221,13 +221,13 @@ const InfoFuelWebsite = () => {
         <div className="mb-12 text-center">
           <h2 className="text-sm font-semibold uppercase tracking-widest text-fuel-ember">What We Provide</h2>
           <h3 className="mb-5 text-4xl font-bold sm:text-5xl">
-            Everything You Need To Scale{' '}
+            Everything You Need To{' '}
             <span className="bg-gradient-to-r from-fuel-orange to-fuel-red bg-clip-text text-transparent">
-              Your Brand’s Product
+              Scale Your Brand’s Product
             </span>
           </h3>
           <p className="mx-auto max-w-3xl text-lg text-gray-300">
-            Our integrated team covers every core function of a revenue engine. No more juggling freelancers or scattered
+            Our trained team covers every core function of a functional revenue engine. No more juggling multiple freelancers or scattered
             systems.
           </p>
         </div>
@@ -236,7 +236,7 @@ const InfoFuelWebsite = () => {
           {[
             {
               title: 'Product Creation',
-              copy: 'Get professional help from industry experts to build an unstoppable product.',
+              copy: 'Get professional help from industry experts to build an unstoppable high ticket product.',
               svg: (
                 <path
                   strokeLinecap="round"
@@ -248,7 +248,7 @@ const InfoFuelWebsite = () => {
             },
             {
               title: 'Sales Infrastructure',
-              copy: 'Turn content into revenue with a funnel and sales stack backed by an experienced team.',
+              copy: 'Turn your content straight into revenue with proven funnels backed by an experienced sales team.',
               svg: (
                 <path
                   strokeLinecap="round"
@@ -260,7 +260,7 @@ const InfoFuelWebsite = () => {
             },
             {
               title: 'Join Our Community',
-              copy: 'Access an exclusive network of driven creators and sales pros to accelerate learning.',
+              copy: 'Gain access to an exclusive network with other driven creators and sales pros to accelerate learning.',
               svg: (
                 <path
                   strokeLinecap="round"
@@ -272,7 +272,7 @@ const InfoFuelWebsite = () => {
             },
             {
               title: 'Backend Automation',
-              copy: 'Operate like a company, not a creator—automations and analytics do the heavy lifting.',
+              copy: 'Operate like a business — let automated sales systems and analytics do the heavy lifting.',
               svg: (
                 <>
                   <path
@@ -306,7 +306,7 @@ const InfoFuelWebsite = () => {
       <Section id="how">
         <div className="grid items-start gap-16 lg:grid-cols-2">
           <div className="lg:sticky lg:top-28">
-            <h2 className="mb-3 text-sm font-semibold uppercase tracking-widest text-fuel-ember">How We Do It</h2>
+            <h2 className="mb-3 text-sm font-semibold uppercase tracking-widest text-fuel-ember">How Do We Do It?</h2>
             <h3 className="mb-5 text-4xl font-bold leading-tight sm:text-5xl">
               From Reels to Real Profit{' '}
               <span className="block bg-gradient-to-r from-fuel-orange to-fuel-red bg-clip-text text-transparent">
@@ -314,7 +314,7 @@ const InfoFuelWebsite = () => {
               </span>
             </h3>
             <p className="mb-6 text-lg text-gray-300">
-              We build the full customer journey—from backend systems to platform content to trained closers—all under
+              We install the entire customer journey from lead generation to backend systems to trained closers - all under
               one roof.
             </p>
             <p className="text-base font-medium text-fuel-ember">
@@ -326,7 +326,7 @@ const InfoFuelWebsite = () => {
                 href="#book-call"
                 className="inline-flex items-center rounded-full bg-gradient-to-r from-fuel-orange to-fuel-red px-8 py-4 font-semibold text-white shadow-[0_10px_30px_-10px_rgba(230,57,70,0.6)] transition hover:opacity-90"
               >
-                Start Building Your Empire
+                Interested? Book a Call
                 <ChevronRight className="ml-2 h-5 w-5" />
               </a>
             </div>
@@ -339,19 +339,19 @@ const InfoFuelWebsite = () => {
                 num: 1,
                 title: 'LEARN',
                 copy:
-                  'Create or refine your offer. Learn the basics of online marketing and build a seamless organic sales model with working product design and funnels.',
+                  'We help create or refine your offer using proven methods from industry experts. Learn the basics of online marketing and join an exclusive community of engaged creators to fuel your inspiration.',
               },
               {
                 num: 2,
                 title: 'BUILD',
                 copy:
-                  'Hire and onboard a custom sales team. Align marketing and sales. Build automations and analytics to track what matters.',
+                  'We hire and onboard a custom sales team aligned to your offer and implement professional and automated sales funnels with analytics to track what matters.',
               },
               {
                 num: 3,
                 title: 'OPERATION',
                 copy:
-                  'We manage the sales team and use data from both sides to make decisions. Follow a growth model to predictably increase revenue month over month.',
+                  'We manage your sales team and use data to identify and fix weak spots in the system. Follow a systemized growth model to predictably increase revenue month over month.',
               },
             ].map(step => (
               <div key={step.num} className="relative">
@@ -386,16 +386,16 @@ const InfoFuelWebsite = () => {
       <Section id="results">
         <div className="mb-12 text-center">
           <h2 className="text-sm font-semibold uppercase tracking-widest text-fuel-ember">Results</h2>
-          <h3 className="mb-4 text-4xl font-bold">From Zero to Revenue Machine</h3>
-          <p className="text-lg text-gray-300">Creators go from burnout to predictable income with InfoFuel systems.</p>
+          <h3 className="mb-4 text-4xl font-bold">Turning your reels into real profit</h3>
+          <p className="text-lg text-gray-300">Our creators go from constant burnout to managing predictable revenue streams.</p>
         </div>
 
         <div className="grid grid-cols-2 gap-8 text-center md:grid-cols-4">
           {[
             { label: 'Cash Collected', value: `$${Math.round(counters.cash)}K+`, grad: true },
-            { label: 'Leads Generated', value: `${Math.round(counters.leads).toLocaleString()}+` },
+            { label: 'Extra Leads Generated', value: `${Math.round(counters.leads).toLocaleString()}+` },
             { label: 'Deals Closed', value: `${Math.round(counters.deals)}+` },
-            { label: 'Years Experience', value: `${Math.round(counters.years)}+` },
+            { label: 'Years Of Operating', value: `${Math.round(counters.years)}+` },
           ].map((stat, i) => (
             <div key={i} className="rounded-2xl border border-white/10 bg-white/[0.06] p-6 backdrop-blur-sm">
               <div
@@ -420,9 +420,9 @@ const InfoFuelWebsite = () => {
         </div>
         <div className="mx-auto grid max-w-5xl gap-8 md:grid-cols-3">
           {[
-            { name: 'Daryll', role: 'CEO', image: '/team-ceo.png' },
-            { name: 'Jamal', role: 'COO', image: '/team-cso.png' },
-            { name: 'Kyle', role: 'Sales', image: '/team-coo.png' },
+            { name: 'Cory Braun', role: 'Sales', image: '/team-ceo.png' },
+            { name: 'logan Duff', role: 'Backend Development', image: '/team-cso.png' },
+            { name: 'Deonne Wade', role: 'Copywriter', image: '/team-coo.png' },
           ].map((m, i) => (
             <motion.div key={i} whileHover={{ y: -4 }} className="text-center">
               <div className="mx-auto mb-5 h-56 w-56 overflow-hidden rounded-full ring-4 ring-white/10 shadow-[0_10px_40px_-10px_rgba(255,146,72,0.25)]">
@@ -451,7 +451,7 @@ const InfoFuelWebsite = () => {
       </span>
     </h2>
     <p className="mb-10 text-center text-lg text-gray-300">
-      Book a free strategy call to see how InfoFuel can install the systems, sales, and structure your brand needs.
+      Book a free strategy call with us to discuss how InfoFuel can install the systems, sales, and structure your brand needs.
     </p>
 
     {/* Full-width Cal embed */}
@@ -465,7 +465,7 @@ const InfoFuelWebsite = () => {
         target="_blank"
         rel="noreferrer"
       >
-        Open in a new tab
+        Open Cal.com in a new tab
       </a>
     </p>
   </div>
@@ -479,8 +479,7 @@ const InfoFuelWebsite = () => {
                 InfoFuel
               </h3>
               <p className="mt-4 text-gray-300">
-                We fuel small businesses and creators with systems that ignite growth and turn ideas into revenue
-                machines.
+                We fuel small businesses and creators with proven systems that ignite growth and turn brands into profitable revenue streams.
               </p>
             </div>
             <div>
