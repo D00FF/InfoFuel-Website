@@ -37,9 +37,9 @@ export default function BrandScalingStructure() {
       {/* HERO (structure: headline + subhead stacked, single column on mobile) */}
       <Section id="hero">
         <div className="mx-auto max-w-3xl text-center">
-          <p className="text-xs uppercase tracking-wider text-orange-300/80">type here</p>
-          <h1 className="mt-3 text-3xl font-black leading-tight sm:text-5xl">type here</h1>
-          <p className="mt-4 text-base text-gray-300 sm:text-lg">type here</p>
+          <p className="text-xs uppercase tracking-wider text-orange-300/80">Brand Name</p>
+          <h1 className="mt-3 text-3xl font-black leading-tight sm:text-5xl">Learn Exactly How I Went From ____ To ____</h1>
+          <p className="mt-4 text-base text-gray-300 sm:text-lg">And exactly how you can... *An acheivable result from your offer*</p>
         </div>
       </Section>
 
@@ -55,7 +55,7 @@ export default function BrandScalingStructure() {
               />
             </div>
           </div>
-          <p className="mt-3 text-center text-sm text-gray-300">type here</p>
+          <a className="mt-3 text-center text-sm text-gray-300" href="#cta">Sign Up</a>
         </div>
       </Section>
 
@@ -64,14 +64,14 @@ export default function BrandScalingStructure() {
       {/* "HERE'S WHAT YOU'LL DISCOVER" (structure: title + 3 stacked bullet items) */}
       <Section id="discover">
         <div className="mx-auto max-w-3xl text-center">
-          <h2 className="text-2xl font-bold sm:text-3xl">type here</h2>
-          <p className="mt-3 text-gray-300">type here</p>
+          <h2 className="text-2xl font-bold sm:text-3xl">Discover</h2>
+          <p className="mt-3 text-gray-300">Key Takeaways from your offer</p>
         </div>
         <div className="mx-auto mt-8 max-w-3xl space-y-4">
           {[0, 1, 2].map((i) => (
             <div key={i} className="flex items-start gap-3 rounded-xl border border-white/10 bg-white/[0.04] p-5">
               <div className="mt-1 h-2 w-2 shrink-0 rounded-full bg-gradient-to-r from-orange-400 to-red-500" />
-              <p className="text-gray-200">type here</p>
+              <p className="text-gray-200">test</p>
             </div>
           ))}
         </div>
@@ -107,8 +107,7 @@ export default function BrandScalingStructure() {
                   Open Cal.com in a new tab
                 </a>
               </p>
-          <p className="mt-2 text-sm text-gray-400">type here</p>
-        </div>
+          </div>
       </Section>
 
       {/* FOOTER (structure: minimal) */}
@@ -117,8 +116,8 @@ export default function BrandScalingStructure() {
           <div className="flex flex-col items-center justify-between gap-6 sm:flex-row">
             <div>type here</div>
             <div className="flex gap-6">
-              <Link href="#" className="hover:text-white">type here</Link>
-              <Link href="#" className="hover:text-white">type here</Link>
+              <Link href="#" className="hover:text-white">Privacy Policy</Link>
+              <Link href="#" className="hover:text-white">Terms of Service</Link>
             </div>
           </div>
         </Container>
