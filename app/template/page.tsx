@@ -13,6 +13,11 @@ const Container = ({
   className?: string;
 }) => <div className={`mx-auto max-w-6xl px-6 lg:px-8 ${className}`}>{children}</div>;
 
+  const scrollToSection = (id: string) => {
+    const el = document.getElementById(id);
+    if (el) el.scrollIntoView({ behavior: 'smooth' });
+  };
+
 const Section = ({
   id,
   children,
@@ -36,32 +41,53 @@ export default function BrandScalingStructure() {
         <div className="absolute right-[-15%] bottom-10 h-[28rem] w-[28rem] rounded-full opacity-20 blur-[120px]" style={{ background: "radial-gradient(closest-side, rgba(230,57,70,.30), transparent)" }} />
       </div>
 
-      {/* HEADER / LOGO (structure: logo centered above hero) */}
-      <header className="border-b border-white/10 bg-black/30 backdrop-blur">
+    {/* NAV */}
+      <nav className="fixed top-0 z-50 w-full border-b border-white/[0.06] bg-black/40 backdrop-blur-md">
         <Container>
           <div className="flex h-16 items-center justify-between">
-            <Link href="/" className="bg-gradient-to-r from-orange-400 to-red-500 bg-clip-text text-2xl font-semibold text-transparent">InfoFuel</Link>
-            <nav className="hidden gap-8 sm:flex">
-              <a className="text-sm text-gray-300 hover:text-white" href="#video">Your VSL</a>
-              <a className="text-sm text-gray-300 hover:text-white" href="#discover">What You’ll Provide</a>
-              <a className="text-sm text-gray-300 hover:text-white" href="#cta">Sign Up For Customers</a>
-            </nav>
-            <a href="#book" className="rounded-md bg-white px-3 py-2 text-sm font-semibold text-neutral-900 hover:bg-gray-100">Book A Call</a>
+            <Link
+            href="/"
+            className="bg-gradient-to-r from-fuel-orange to-fuel-red bg-clip-text text-2xl font-bold text-transparent"
+            aria-label="Go to Home"
+>            InfoFuel
+            </Link>
+            <div className="hidden items-center gap-8 text-sm md:flex">
+              {['Your VSL', 'What You Will Povide', 'Sign Up For Customers'].map(s => (
+                <button
+                  key={s}
+                  onClick={() => scrollToSection(s)}
+                  className="transition text-gray-300 hover:text-white"
+                >
+                  {s.charAt(0).toUpperCase() + s.slice(1)}
+                </button>
+              ))}
+            </div>
+            <button
+              onClick={() => scrollToSection('book-call')}
+              className="rounded-lg bg-gradient-to-r from-fuel-orange to-fuel-red px-5 py-2 font-semibold text-white shadow-[0_8px_24px_-10px_rgba(230,57,70,0.6)] transition hover:opacity-90"
+            >
+              Book A Call
+            </button>
           </div>
         </Container>
-      </header>
+      </nav>
 
       {/* HERO (structure: headline + subhead stacked, single column on mobile) */}
-      <Section id="hero">
+      <Section id="Your VSL">
+          {/* match section blends used elsewhere */}
+  <div className="pointer-events-none absolute inset-0 bg-embers opacity-[0.16]" />
+  <div className="pointer-events-none absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-white/5 to-transparent" />
+
+  <div className="relative z-10 mx-auto max-w-6xl px-6 lg:px-8">
+    {/* Hero Section */}
+  </div>
+  <div className="mt-10"> </div>
         <div className="mx-auto max-w-3xl text-center">
-          <p className="text-xs uppercase tracking-wider text-orange-300/80">Brand Name</p>
+          <p className="text-xl uppercase tracking-wider text-fuel-ember">Brand Name</p>
           <h1 className="mt-3 text-3xl font-black leading-tight sm:text-5xl">Learn Exactly How I Went From ________ To ________</h1>
           <p className="mt-4 text-base text-gray-300 sm:text-lg">And exactly how you can... *An acheivable result from your offer*</p>
         </div>
-      </Section>
-
-      {/* CENTERED VIDEO (structure: single centered video with caption) */}
-      <Section id="video">
+        <div className="mt-20"> </div>
         <div className="mx-auto max-w-3xl">
           <div className="overflow-hidden rounded-2xl border border-white/10 bg-white/[0.06] p-2 backdrop-blur">
             <div className="relative aspect-video w-full overflow-hidden rounded-xl">
@@ -71,15 +97,28 @@ export default function BrandScalingStructure() {
                 className="h-full w-full object-cover"
               />
             </div>
+          </div> 
+          <div className="mt-10"> </div>
+          <div className="mx-auto max-w-3xl text-center">
+          <a className="text-2xl uppercase tracking-wider text-fuel-ember" href="#Sign Up For Customers">Sign Up</a>
           </div>
-          <a className="mt-3 text-center text-sm text-gray-300" href="#cta">Sign Up</a>
         </div>
+        <div className="mt-20"> </div>
       </Section>
 
 
 
       {/* "HERE'S WHAT YOU'LL DISCOVER" (structure: title + 3 stacked bullet items) */}
-      <Section id="discover">
+      <Section id="What You Will Povide">
+          {/* match section blends used elsewhere */}
+  <div className="pointer-events-none absolute inset-x-0 top-0 h-16 bg-gradient-to-b from-white/5 to-transparent" />
+  <div className="pointer-events-none absolute inset-0 bg-embers opacity-[0.16]" />
+  <div className="pointer-events-none absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-white/5 to-transparent" />
+
+  <div className="relative z-10 mx-auto max-w-6xl px-6 lg:px-8">
+    {/* Discover Section */}
+  </div>
+  <div className="mt-20"> </div>
         <div className="mx-auto max-w-3xl text-center">
           <h2 className="text-2xl font-bold sm:text-3xl">Discover</h2>
           <p className="mt-3 text-gray-300">Key Takeaways from your offer</p>
@@ -92,22 +131,10 @@ export default function BrandScalingStructure() {
             </div>
           ))}
         </div>
-      </Section>
-      
-{/* ===== Design Showcase (paste where you want it) ===== */}
-<section id="design-showcase" className="relative overflow-hidden py-20">
-  {/* match section blends used elsewhere */}
-  <div className="pointer-events-none absolute inset-x-0 top-0 h-16 bg-gradient-to-b from-white/5 to-transparent" />
-  <div className="pointer-events-none absolute inset-0 bg-embers opacity-[0.16]" />
-  <div className="pointer-events-none absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-white/5 to-transparent" />
+        <div className="mt-20"> </div>
 
-  <div className="relative z-10 mx-auto max-w-6xl px-6 lg:px-8">
     {/* Label / Title / Subtitle (same pattern as other sections) */}
     <div className="text-center">
-      <div className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/10 px-4 py-1.5 text-xs font-medium text-white/90 backdrop-blur">
-        <span className="h-1.5 w-1.5 rounded-full bg-gradient-to-r from-orange-400 to-red-500" />
-        Design Showcase
-      </div>
       <h2 className="mt-4 text-3xl font-extrabold tracking-tight sm:text-4xl">Modern Themes Young Adults Love</h2>
       <p className="mt-2 text-base text-gray-300 sm:text-lg">Four vibe-tested looks you can apply to your landing page in minutes.</p>
     </div>
@@ -171,12 +198,21 @@ export default function BrandScalingStructure() {
         </div>
       </div>
     </div>
+    <div className="mt-20"> </div>
+  </Section>
+
+
+      {/* CTA Section */}
+      <Section id="Sign Up For Customers" className="pb-20">
+        {/* match section blends used elsewhere */}
+  <div className="pointer-events-none absolute inset-x-0 top-0 h-16 bg-gradient-to-b from-white/5 to-transparent" />
+  <div className="pointer-events-none absolute inset-0 bg-embers opacity-[0.16]" />
+  <div className="pointer-events-none absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-red-500/20 to-transparent" />
+
+  <div className="relative z-10 mx-auto max-w-6xl px-6 lg:px-8">
+    {/* CTA Section */}
   </div>
-</section>
-
-
-      {/* CTA (structure: headline, short text, single button) */}
-      <Section id="cta" className="pb-20">
+  <div className="mt-10"> </div>
         <div className="mx-auto max-w-2xl text-center">
           <h3 className="text-3xl font-bold sm:text-4xl">Interested?</h3>
           <p className="mt-3 text-gray-300">This is where potential customers will enter their information</p>
@@ -184,13 +220,19 @@ export default function BrandScalingStructure() {
             <a href="#book" className="rounded-lg bg-gradient-to-r from-orange-400 to-red-500 px-6 py-3 font-semibold text-white hover:opacity-90">Get The Full Offer</a>
           </div>
         </div>
+        <div className="mt-10"> </div>
       </Section>
 
       {/* BOOKING (full width embed area) */}
       <Section id="book">
+                {/* match section blends used elsewhere */}
+  <div className="pointer-events-none absolute inset-x-0 top-0 h-16 bg-gradient-to-b from-red-500/20 to-transparent" />
+  <div className="pointer-events-none absolute inset-0 bg-embers opacity-[0.16]" />
+        <div className="mt-10"> </div>
         <div className="mx-auto max-w-5xl text-center">
           <h4 className="text-2xl font-semibold">Like What You See?</h4>
           <p className="mt-2 text-gray-300">Book a free consultation</p>
+          <div className="mt-10"> </div>
           {/* Full-width Cal embed */}
               <CalEmbed calLink="infofuel.ca/30min" height="620px" />
           
