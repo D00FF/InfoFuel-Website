@@ -2,13 +2,30 @@
 
 import CalEmbed from "./CalEmbed";
 import React, { useState, useEffect } from 'react';
-import { motion } from 'framer-motion';
-import { ChevronRight, Phone, Target, Settings, Zap, Container, Section } from 'lucide-react';
 import Image from 'next/image';
-import { div, footer, section } from 'framer-motion/client';
 import Link from "next/link";
 
+const Container = ({
+  children,
+  className = "",
+}: {
+  children: React.ReactNode;
+  className?: string;
+}) => <div className={`mx-auto max-w-6xl px-6 lg:px-8 ${className}`}>{children}</div>;
 
+const Section = ({
+  id,
+  children,
+  className = "",
+}: {
+  id?: string;
+  children: React.ReactNode;
+  className?: string;
+}) => (
+  <section id={id} className={`relative py-16 sm:py-20 ${className}`}>
+    <Container>{children}</Container>
+  </section>
+);
 
 export default function BrandScalingStructure() {
   return (
