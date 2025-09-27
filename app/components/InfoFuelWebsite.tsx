@@ -201,7 +201,7 @@ const InfoFuelWebsite = () => {
     {/* Label / Title / Subtitle — same pattern as other sections */}
     <div className="mb-12 text-center">
       <h2 className="text-sm font-semibold uppercase tracking-widest text-fuel-ember">
-        Example Landing Page
+        Preview
       </h2>
       <h3 className="mb-4 text-4xl font-bold">
         Professionally Built Landing Page
