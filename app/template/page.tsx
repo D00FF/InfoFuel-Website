@@ -26,7 +26,7 @@ export default function BrandScalingStructure() {
             <Link href="/" className="bg-gradient-to-r from-orange-400 to-red-500 bg-clip-text text-2xl font-semibold text-transparent">InfoFuel</Link>
             <nav className="hidden gap-8 sm:flex">
               <a className="text-sm text-gray-300 hover:text-white" href="#video">Your VSL</a>
-              <a className="text-sm text-gray-300 hover:text-white" href="#discover">What You'll Provide</a>
+              <a className="text-sm text-gray-300 hover:text-white" href="#discover">What You’ll Provide</a>
               <a className="text-sm text-gray-300 hover:text-white" href="#cta">Sign Up For Customers</a>
             </nav>
             <a href="#book" className="rounded-md bg-white px-3 py-2 text-sm font-semibold text-neutral-900 hover:bg-gray-100">Book A Call</a>
