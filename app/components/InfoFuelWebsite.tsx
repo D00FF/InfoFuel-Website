@@ -189,34 +189,21 @@ const InfoFuelWebsite = () => {
 
 {/* ===== Example Landing Page (place right under the hero) ===== */}
 <section
-  id="Example Landing Page"
-  className="relative pt-12 pb-16 sm:pt-16 sm:pb-20"
->
-  {/* top blend from hero */}
+  id="Example Landing Page">
+    <div className="mb-12 text-center">
+          <h2 className="text-sm font-semibold uppercase tracking-widest text-fuel-ember">Example Landing Page</h2>
+          <h3 className="mb-4 text-4xl font-bold">Professionally Built Landing Page</h3>
+          <p className="text-lg text-gray-300">
+            Take a look at what we envision your landing page to look like
+          </p>
+        </div>
+
   <div
     aria-hidden
     className="pointer-events-none absolute inset-x-0 -top-8 h-16 bg-gradient-to-b from-black/0 via-black/20 to-black/40"
   />
 
-  {/* subtle ember background texture */}
-  <div className="pointer-events-none absolute inset-0 bg-embers/10" />
 
-  <div className="relative z-10 mx-auto max-w-6xl px-6 lg:px-8">
-    {/* Ember badge/label (mimic other sections) */}
-    <div className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/10 px-4 py-1.5 text-xs font-medium text-white/90 backdrop-blur">
-      <span className="h-1.5 w-1.5 rounded-full bg-gradient-to-r from-orange-400 to-red-500" />
-      Example Landing Page
-    </div>
-
-    {/* Title + Subtitle (mimic other sections) */}
-    <div className="mt-4 text-left sm:text-center">
-      <h2 className="text-3xl font-extrabold tracking-tight sm:text-4xl text-white">
-        Professionally Built Landing Page
-      </h2>
-      <p className="mt-2 text-base text-gray-300 sm:text-lg">
-        Take a look at what we envision your landing page to look like
-      </p>
-    </div>
 
     {/* Glass card preview — scaled down to ~half width */}
     <div className="mx-auto mt-8 max-w-xl">
@@ -271,13 +258,7 @@ const InfoFuelWebsite = () => {
         </Link>
       </div>
     </div>
-  </div>
-
-  {/* bottom blend into next section (e.g., Process) */}
-  <div
-    aria-hidden
-    className="pointer-events-none absolute inset-x-0 -bottom-10 h-20 bg-gradient-to-t from-black/0 via-black/20 to-black/60"
-  />
+    
 </section>
 
 {/* PROCESS */}
