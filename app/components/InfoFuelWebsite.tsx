@@ -6,6 +6,8 @@ import { motion } from 'framer-motion';
 import { ChevronRight, Phone, Target, Settings, Zap } from 'lucide-react';
 import Image from 'next/image';
 import { div } from 'framer-motion/client';
+import Link from "next/link";
+
 
 type Counters = {
   cash: number;
@@ -184,6 +186,89 @@ const InfoFuelWebsite = () => {
         {/* hero bottom blend */}
         <div className="pointer-events-none absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-white/5 to-transparent" />
       </section>
+
+        {/* ===== Example Landing Page (place right under the hero) ===== */}
+     <section id="Example Landing Page" className="relative py-16 sm:py-20">
+  <div className="pointer-events-none absolute inset-0 bg-embers/10" />
+
+  <div className="mx-auto max-w-6xl px-6 lg:px-8 relative z-10">
+    {/* Ember Text */}
+    <div className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/10 px-4 py-1.5 text-xs font-medium text-white/90 backdrop-blur">
+      <span className="h-1.5 w-1.5 rounded-full bg-gradient-to-r from-orange-400 to-red-500" />
+      Example Landing Page
+    </div>
+
+    {/* Heading + Sub */}
+    <div className="mt-4 flex flex-col items-start gap-2 sm:items-center">
+      <h2 className="text-3xl font-extrabold tracking-tight sm:text-4xl text-white">
+        <span className="block">Professionally Built Landing Page</span>
+      </h2>
+      <p className="max-w-2xl text-base text-gray-300 sm:text-lg text-left sm:text-center">
+        Take a look at what we envision your landing page to look like
+      </p>
+
+      {/* CTA Button */}
+      <div className="mt-6">
+        {/* Adjust href to your actual TemplatePage route if different */}
+        <Link
+          href="/TemplatePage.tsx"
+          className="inline-flex items-center gap-2 rounded-lg bg-gradient-to-r from-orange-400 to-red-500 px-5 py-3 text-sm font-semibold text-white shadow-lg transition hover:opacity-90 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-0 focus-visible:ring-white/60"
+        >
+          View Example Page
+          <svg className="h-4 w-4" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+            <path fillRule="evenodd" d="M10.22 3.22a.75.75 0 011.06 0l5.5 5.5a.75.75 0 010 1.06l-5.5 5.5a.75.75 0 11-1.06-1.06L14.94 10 10.22 5.28a.75.75 0 010-1.06z" clipRule="evenodd" />
+            <path fillRule="evenodd" d="M3 10a.75.75 0 01.75-.75h10.69a.75.75 0 010 1.5H3.75A.75.75 0 013 10z" clipRule="evenodd" />
+          </svg>
+        </Link>
+      </div>
+    </div>
+
+    {/* Glass Card Preview (acts as a big button) */}
+    <div className="mt-10">
+      <Link
+        href="/TemplatePage.tsx" /* <-- change if your route differs */
+        className="group block"
+        aria-label="Open example landing page"
+      >
+        <figure
+          className="relative overflow-hidden rounded-2xl border border-white/10 bg-white/10 backdrop-blur
+                     transition [transform:translateZ(0)]
+                     hover:shadow-[0_0_0_3px_rgba(255,255,255,0.06)] hover:border-white/20"
+        >
+          {/* soft glow */}
+          <div
+            className="pointer-events-none absolute -inset-10 opacity-0 blur-2xl transition-opacity duration-500 group-hover:opacity-30"
+            style={{ background: "radial-gradient(50% 50% at 50% 50%, rgba(255,146,72,0.35), rgba(230,57,70,0.25), transparent 70%)" }}
+          />
+
+          {/* Image */}
+          <div className="relative">
+            <Image
+              src="/landingpagepreview.png"
+              alt="Preview of a professionally built landing page"
+              width={2400}
+              height={1350}
+              priority
+              className="w-full h-auto object-cover transition-transform duration-500 group-hover:scale-[1.02]"
+            />
+          </div>
+
+          {/* Bottom label */}
+          <figcaption
+            className="absolute inset-x-0 bottom-0 flex items-center justify-center
+                       bg-gradient-to-t from-black/60 via-black/20 to-transparent
+                       p-4"
+          >
+            <span className="rounded-full border border-white/15 bg-white/10 px-4 py-1.5 text-xs font-medium text-white/90 backdrop-blur transition group-hover:bg-white/15">
+              Take a peak at your potential
+            </span>
+          </figcaption>
+        </figure>
+      </Link>
+    </div>
+  </div>
+</section>
+
 
       {/* PROCESS */}
       <Section id="process">
@@ -421,7 +506,7 @@ const InfoFuelWebsite = () => {
         <div className="mx-auto grid max-w-5xl gap-8 md:grid-cols-3">
           {[
             { name: 'Cory Braun', role: 'Sales', image: '/team-ceo.png' },
-            { name: 'logan Duff', role: 'Backend Development', image: '/team-cso.png' },
+            { name: 'Logan Duff', role: 'Backend Development', image: '/team-cso.png' },
             { name: 'Deonne Wade', role: 'Copywriter', image: '/team-coo.png' },
           ].map((m, i) => (
             <motion.div key={i} whileHover={{ y: -4 }} className="text-center">
