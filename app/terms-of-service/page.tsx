@@ -1,6 +1,7 @@
 // app/terms-of-service/page.tsx
 import type { Metadata } from "next";
 import React from "react";
+import Link from "next/link";
 
 export const metadata: Metadata = {
   title: "Terms of Service — InfoFuel",
@@ -21,18 +22,12 @@ export default function TermsOfServicePage() {
   const updated = "September 29, 2025";
 
   return (
-    // Page-scoped fix: prevents horizontal scroll without touching RootLayout
     <div className="overflow-x-hidden">
       <main className="relative min-h-screen bg-fuel-dark text-white">
-        {/* Decorative background glows (clipped & centered) */}
         <div className="pointer-events-none absolute inset-0 -z-10 overflow-hidden">
           <div
             className="absolute left-1/2 top-24 h-[40rem] w-[40rem] -translate-x-1/2 rounded-full blur-[120px] opacity-20"
             style={{ background: "radial-gradient(closest-side, rgba(255,107,44,0.30), transparent)" }}
-          />
-          <div
-            className="absolute left-1/2 bottom-[10%] h-[36rem] w-[36rem] -translate-x-1/2 rounded-full blur-[120px] opacity-20"
-            style={{ background: "radial-gradient(closest-side, rgba(230,57,70,0.28), transparent)" }}
           />
         </div>
 
@@ -189,9 +184,9 @@ export default function TermsOfServicePage() {
           </div>
 
           <div className="mt-8 text-sm text-gray-400">
-            <a href="/" className="underline hover:text-white">
+            <Link href="/" className="underline hover:text-white">
               ← Back to Home
-            </a>
+            </Link>
           </div>
         </div>
       </main>

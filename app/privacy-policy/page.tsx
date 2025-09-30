@@ -1,6 +1,7 @@
 // app/privacy-policy/page.tsx
 import type { Metadata } from "next";
 import React from "react";
+import Link from "next/link";
 
 export const metadata: Metadata = {
   title: "Privacy Policy — InfoFuel",
@@ -21,10 +22,8 @@ export default function PrivacyPolicyPage() {
   const updated = "September 29, 2025";
 
   return (
-    // Page-scoped fix: prevents horizontal scroll without touching RootLayout
     <div className="overflow-x-hidden">
       <main className="relative min-h-screen bg-fuel-dark text-white">
-        {/* Decorative background glows (clipped & centered) */}
         <div className="pointer-events-none absolute inset-0 -z-10 overflow-hidden">
           <div
             className="absolute left-1/2 top-24 h-[40rem] w-[40rem] -translate-x-1/2 rounded-full blur-[120px] opacity-20"
@@ -166,9 +165,9 @@ export default function PrivacyPolicyPage() {
           </div>
 
           <div className="mt-8 text-sm text-gray-400">
-            <a href="/" className="underline hover:text-white">
+            <Link href="/" className="underline hover:text-white">
               ← Back to Home
-            </a>
+            </Link>
           </div>
         </div>
       </main>
