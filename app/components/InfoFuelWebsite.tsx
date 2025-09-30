@@ -1,42 +1,62 @@
 'use client';
 
-import CalEmbed from './CalEmbed';
-import React, { useState, useEffect } from 'react';
-import { motion } from 'framer-motion';
-import { ChevronRight, Phone, Target, Settings, Zap, Container, Section } from 'lucide-react';
+import React, { useEffect, useState } from 'react';
+import { motion, useReducedMotion } from 'framer-motion';
+import { ChevronRight, Target, Settings, Zap } from 'lucide-react';
 import Image from 'next/image';
-import { div, footer, section } from 'framer-motion/client';
-import Link from "next/link";
+import Link from 'next/link';
+import CalEmbed from './CalEmbed';
 
+type Counters = { cash: number; leads: number; deals: number; years: number };
 
-type Counters = {
-  cash: number;
-  leads: number;
-  deals: number;
-  years: number;
-};
+const Container = ({ children }: { children: React.ReactNode }) => (
+  <div className="mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8">{children}</div>
+);
+
+const Section = ({
+  id,
+  children,
+  bg,
+}: {
+  id: string;
+  children: React.ReactNode;
+  bg?: string;
+}) => (
+  <section id={id} className={`relative overflow-hidden py-16 sm:py-20 ${bg ?? ''}`}>
+    {/* top sheen */}
+    <div className="pointer-events-none absolute inset-x-0 top-0 h-12 bg-gradient-to-b from-white/5 to-transparent" />
+    {/* ember field */}
+    <div className="pointer-events-none absolute inset-0 bg-embers opacity-[0.16] sm:opacity-[0.18]" />
+    <Container>{children}</Container>
+    {/* bottom sheen */}
+    <div className="pointer-events-none absolute inset-x-0 bottom-0 h-12 bg-gradient-to-t from-white/5 to-transparent" />
+  </section>
+);
+
+const Pill = ({ children }: { children: React.ReactNode }) => (
+  <div className="inline-flex items-center rounded-full border border-white/10 bg-white/[0.06] px-3 py-1.5 text-xs text-fuel-ember sm:text-sm backdrop-blur-sm">
+    <span className="mr-2 inline-block h-2 w-2 rounded-full bg-fuel-ember" />
+    {children}
+  </div>
+);
 
 const InfoFuelWebsite = () => {
-  const [counters, setCounters] = useState<Counters>({
-    cash: 0,
-    leads: 0,
-    deals: 0,
-    years: 0,
-  });
+  const [counters, setCounters] = useState<Counters>({ cash: 0, leads: 0, deals: 0, years: 0 });
+  const prefersReducedMotion = useReducedMotion();
 
   useEffect(() => {
+    // Shorter, smoother mobile animation; no counter if prefers-reduced-motion
+    if (prefersReducedMotion) return;
     const targets: Counters = { cash: 570, leads: 3200, deals: 850, years: 4 };
-    const duration = 2000;
-    const stepMs = 50;
+    const duration = 1600;
+    const stepMs = 40;
     const steps = duration / stepMs;
-
     const increments: Counters = {
       cash: targets.cash / steps,
       leads: targets.leads / steps,
       deals: targets.deals / steps,
       years: targets.years / steps,
     };
-
     const interval = setInterval(() => {
       setCounters(prev => {
         const next: Counters = {
@@ -45,105 +65,71 @@ const InfoFuelWebsite = () => {
           deals: Math.min(prev.deals + increments.deals, targets.deals),
           years: Math.min(prev.years + increments.years, targets.years),
         };
-        const done =
+        if (
           next.cash === targets.cash &&
           next.leads === targets.leads &&
           next.deals === targets.deals &&
-          next.years === targets.years;
-        if (done) clearInterval(interval);
+          next.years === targets.years
+        ) {
+          clearInterval(interval);
+        }
         return next;
       });
     }, stepMs);
-
     return () => clearInterval(interval);
-  }, []);
+  }, [prefersReducedMotion]);
 
   const scrollToSection = (id: string) => {
     const el = document.getElementById(id);
-    if (el) el.scrollIntoView({ behavior: 'smooth' });
+    if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
   };
 
-  const Container = ({ children }: { children: React.ReactNode }) => (
-    <div className="mx-auto max-w-7xl px-6 lg:px-8">{children}</div>
-  );
-
-  const Section = ({
-    id,
-    children,
-    bg,
-  }: {
-    id: string;
-    children: React.ReactNode;
-    bg?: string;
-  }) => (
-    <section
-      id={id}
-      className={`relative overflow-hidden py-24 ${bg ? bg : ''}`}
-    >
-      {/* subtle section top sheen to blend into previous */}
-      <div className="pointer-events-none absolute inset-x-0 top-0 h-16 bg-gradient-to-b from-white/5 to-transparent" />
-      {/* ember field (light) */}
-      <div className="pointer-events-none absolute inset-0 bg-embers opacity-[0.18]" />
-      <motion.div
-        initial={{ opacity: 0, y: 36 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6 }}
-        viewport={{ once: true }}
-      >
-        <Container>{children}</Container>
-      </motion.div>
-      {/* subtle bottom blend into next section */}
-      <div className="pointer-events-none absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-white/5 to-transparent" />
-    </section>
-  );
-
-  const Pill = ({ children }: { children: React.ReactNode }) => (
-    <div className="inline-flex items-center rounded-full border border-white/10 bg-white/[0.06] px-4 py-2 text-fuel-ember backdrop-blur-sm">
-      <span className="mr-2 inline-block h-2 w-2 rounded-full bg-fuel-ember" />
-      {children}
-    </div>
-  );
-
   return (
-    <div className="relative min-h-screen bg-fuel-dark font-sans text-white">
-      {/* global background accents for seamlessness */}
-      <div className="pointer-events-none fixed inset-0 -z-10">
-        {/* deep radial glow left */}
+    <div className="relative min-h-screen bg-fuel-dark font-sans text-white overflow-x-hidden">
+      {/* background glows — centered & clipped to avoid horizontal scroll */}
+      <div className="pointer-events-none fixed inset-0 -z-10 overflow-hidden">
         <div
-          className="absolute -left-40 top-1/4 h-[50rem] w-[50rem] rounded-full blur-[120px] opacity-20"
-          style={{ background: 'radial-gradient(closest-side, rgba(255,107,44,0.35), transparent)' }}
+          className="absolute left-1/2 top-[22%] h-[28rem] w-[28rem] -translate-x-1/2 rounded-full blur-[100px] opacity-25 sm:h-[36rem] sm:w-[36rem]"
+          style={{ background: 'radial-gradient(closest-side, rgba(255,107,44,0.30), transparent)' }}
         />
-        {/* deep radial glow right */}
         <div
-          className="absolute right-[-20%] top-[55%] h-[45rem] w-[45rem] rounded-full blur-[120px] opacity-20"
-          style={{ background: 'radial-gradient(closest-side, rgba(230,57,70,0.32), transparent)' }}
+          className="absolute left-1/2 bottom-[14%] h-[24rem] w-[24rem] -translate-x-1/2 rounded-full blur-[100px] opacity-20 sm:h-[32rem] sm:w-[32rem]"
+          style={{ background: 'radial-gradient(closest-side, rgba(230,57,70,0.26), transparent)' }}
         />
       </div>
 
       {/* NAV */}
-      <nav className="fixed top-0 z-50 w-full border-b border-white/[0.06] bg-black/40 backdrop-blur-md">
+      <nav className="fixed top-0 z-50 w-full border-b border-white/10 bg-black/40 backdrop-blur-md">
         <Container>
-          <div className="flex h-16 items-center justify-between">
+          <div className="flex h-14 items-center justify-between sm:h-16">
             <button
               onClick={() => scrollToSection('hero')}
-              className="bg-gradient-to-r from-fuel-orange to-fuel-red bg-clip-text text-2xl font-bold text-transparent"
+              className="bg-gradient-to-r from-fuel-orange to-fuel-red bg-clip-text text-xl font-bold text-transparent sm:text-2xl"
+              aria-label="Go to top"
             >
               InfoFuel
             </button>
-            <div className="hidden items-center gap-8 text-sm md:flex">
-              {['process', 'services', 'how', 'results', 'team'].map(s => (
+            {/* compact mobile nav; expand on md */}
+            <div className="hidden items-center gap-6 text-sm md:flex">
+              {[
+                { id: 'process', label: 'Process' },
+                { id: 'services', label: 'Services' },
+                { id: 'how', label: 'How' },
+                { id: 'results', label: 'Results' },
+                { id: 'team', label: 'Team' },
+              ].map(item => (
                 <button
-                  key={s}
-                  onClick={() => scrollToSection(s)}
-                  className="transition text-gray-300 hover:text-white"
+                  key={item.id}
+                  onClick={() => scrollToSection(item.id)}
+                  className="text-gray-300 transition hover:text-white"
                 >
-                  {s.charAt(0).toUpperCase() + s.slice(1)}
+                  {item.label}
                 </button>
               ))}
             </div>
             <button
               onClick={() => scrollToSection('book-call')}
-              className="rounded-lg bg-gradient-to-r from-fuel-orange to-fuel-red px-5 py-2 font-semibold text-white shadow-[0_8px_24px_-10px_rgba(230,57,70,0.6)] transition hover:opacity-90"
+              className="rounded-lg bg-gradient-to-r from-fuel-orange to-fuel-red px-4 py-2 text-sm font-semibold text-white shadow-[0_8px_24px_-10px_rgba(230,57,70,0.6)] transition hover:opacity-90 sm:px-5"
             >
               Book A Call
             </button>
@@ -152,30 +138,31 @@ const InfoFuelWebsite = () => {
       </nav>
 
       {/* HERO */}
-      <section id="hero" className="relative overflow-hidden pb-24 pt-32">
-        {/* ambient band to separate from nav */}
-        <div className="pointer-events-none absolute inset-x-0 top-16 h-24 bg-gradient-to-b from-white/5 to-transparent" />
-        {/* ember field for continuity */}
-        <div className="pointer-events-none absolute inset-0 bg-embers opacity-[0.22]" />
+      <section id="hero" className="relative overflow-hidden pb-16 pt-24 sm:pb-20 sm:pt-28">
+        <div className="pointer-events-none absolute inset-x-0 top-12 h-16 bg-gradient-to-b from-white/5 to-transparent sm:top-16" />
+        <div className="pointer-events-none absolute inset-0 bg-embers opacity-[0.20]" />
 
         <Container>
-          <div className="mx-auto max-w-4xl text-center">
+          <div className="mx-auto max-w-3xl text-center sm:max-w-4xl">
             <Pill>3 Spots Available</Pill>
 
-            <h1 className="mt-8 text-5xl font-bold leading-tight md:text-7xl">
+            <h1 className="mt-6 text-4xl font-bold leading-tight sm:mt-8 sm:text-6xl md:text-7xl">
               From <span className="text-fuel-orange">Creator</span> to <span className="text-fuel-red">CEO</span>
               <br className="hidden md:block" />
               Without the Guesswork
             </h1>
 
-            <p className="mt-6 text-xl leading-relaxed text-gray-300">
+            <p className="mt-5 text-base leading-relaxed text-gray-300 sm:mt-6 sm:text-lg">
               We partner with creators to build{' '}
-              <span className="font-semibold text-fuel-ember">scalable, systemized brands</span> that ignite growth —
-              while you focus on content & community.
+              <span className="font-semibold text-fuel-ember">scalable, systemized brands</span> that ignite growth — while you
+              focus on content & community.
             </p>
 
-            <div className="mt-10">
-              <button onClick={() => scrollToSection('book-call')} className="btn-fuel group inline-flex items-center">
+            <div className="mt-8 sm:mt-10">
+              <button
+                onClick={() => scrollToSection('book-call')}
+                className="btn-fuel group inline-flex w-full items-center justify-center rounded-xl px-5 py-3 text-base font-semibold sm:w-auto"
+              >
                 Book A Call
                 <ChevronRight className="ml-2 h-5 w-5 transition-transform group-hover:translate-x-1" />
               </button>
@@ -183,119 +170,104 @@ const InfoFuelWebsite = () => {
           </div>
         </Container>
 
-        {/* hero bottom blend */}
-        <div className="pointer-events-none absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-white/5 to-transparent" />
+        <div className="pointer-events-none absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-white/5 to-transparent" />
       </section>
 
-{/* ===== Example Landing Page (seamless blend) ===== */}
-<section
-  id="Example Landing Page"
-  className="relative overflow-hidden py-24"
->
-  {/* match the standard top sheen used elsewhere */}
-  <div className="pointer-events-none absolute inset-x-0 top-0 h-16 bg-gradient-to-b from-white/5 to-transparent" />
-  {/* match the ember field opacity used in other sections */}
-  <div className="pointer-events-none absolute inset-0 bg-embers opacity-[0.18]" />
+      {/* EXAMPLE LANDING PAGE PREVIEW */}
+      <section id="example" className="relative overflow-hidden py-16 sm:py-20">
+        <div className="pointer-events-none absolute inset-x-0 top-0 h-12 bg-gradient-to-b from-white/5 to-transparent" />
+        <div className="pointer-events-none absolute inset-0 bg-embers opacity-[0.16]" />
 
-  <div className="relative z-10 mx-auto max-w-6xl px-6 lg:px-8">
-    {/* Label / Title / Subtitle — same pattern as other sections */}
-    <div className="mb-12 text-center">
-      <h2 className="text-sm font-semibold uppercase tracking-widest text-fuel-ember">
-        Preview
-      </h2>
-      <h3 className="mb-4 text-4xl font-bold">
-        Professionally Built Landing Page
-      </h3>
-      <p className="text-lg text-gray-300">
-        Take a look at what we envision your landing page to look like
-      </p>
-    </div>
-  </div>
-
-    {/* Glass card preview — scaled down to ~half width */}
-    <div className="mx-auto mt-2 max-w-xl">
-      <Link
-        href="/template" /* change if your TemplatePage route differs */
-        className="group block"
-        aria-label="Open example landing page"
-      >
-        <figure
-          className="relative overflow-hidden rounded-2xl border border-white/10 bg-white/10 backdrop-blur
-                     transition [transform:translateZ(0)]
-                     hover:shadow-[0_0_0_3px_rgba(255,255,255,0.06)] hover:border-white/20"
-        >
-          {/* soft hover glow */}
-          <div
-            className="pointer-events-none absolute -inset-10 opacity-0 blur-2xl transition-opacity duration-500 group-hover:opacity-30"
-            style={{ background: "radial-gradient(50% 50% at 50% 50%, rgba(255,146,72,0.35), rgba(230,57,70,0.25), transparent 70%)" }}
-          />
-
-          {/* Blurred image */}
-          <div className="relative">
-            <Image
-              src="/landingpagepreview.png"
-              alt="Preview of a professionally built landing page"
-              width={1600}
-              height={900}
-              priority
-              className="h-auto w-full object-cover blur-[6px] brightness-[0.7] contrast-[0.9] transition-transform duration-500 group-hover:scale-[1.02]"
-            />
+        <Container>
+          <div className="mb-10 text-center sm:mb-12">
+            <h2 className="text-xs font-semibold uppercase tracking-widest text-fuel-ember sm:text-sm">Preview</h2>
+            <h3 className="mb-3 text-3xl font-bold sm:text-4xl">Professionally Built Landing Page</h3>
+            <p className="text-base text-gray-300 sm:text-lg">
+              Take a look at what we envision your landing page to look like
+            </p>
           </div>
 
-          {/* Full-width opaque ember label */}
-          <figcaption className="absolute inset-x-0 bottom-0">
-            <div className="w-full bg-gradient-to-r from-fuel-orange to-fuel-red px-4 py-3 text-center text-sm font-semibold text-white">
-              Take a peak at your potential
+          <div className="mx-auto mt-2 w-full max-w-xl sm:max-w-2xl">
+            <Link href="/template" className="group block" aria-label="Open example landing page">
+              <figure className="relative overflow-hidden rounded-2xl border border-white/10 bg-white/10 backdrop-blur transition hover:border-white/20 hover:shadow-[0_0_0_3px_rgba(255,255,255,0.06)]">
+                {/* hover glow (desktop emphasis) */}
+                <div
+                  className="pointer-events-none absolute -inset-10 hidden opacity-0 blur-2xl transition-opacity duration-500 group-hover:opacity-30 sm:block"
+                  style={{
+                    background:
+                      'radial-gradient(50% 50% at 50% 50%, rgba(255,146,72,0.35), rgba(230,57,70,0.25), transparent 70%)',
+                  }}
+                />
+                <div className="relative">
+                  <Image
+                    src="/landingpagepreview.png"
+                    alt="Preview of a professionally built landing page"
+                    width={1600}
+                    height={900}
+                    priority
+                    sizes="(max-width: 640px) 90vw, (max-width: 1024px) 70vw, 640px"
+                    className="h-auto w-full object-cover blur-[4px] brightness-[0.8] contrast-[0.95] transition-transform duration-500 group-hover:scale-[1.02]"
+                  />
+                </div>
+                <figcaption className="absolute inset-x-0 bottom-0">
+                  <div className="w-full bg-gradient-to-r from-fuel-orange to-fuel-red px-4 py-3 text-center text-sm font-semibold text-white">
+                    Take a peek at your potential
+                  </div>
+                </figcaption>
+              </figure>
+            </Link>
+
+            <div className="mt-4 flex flex-col items-stretch gap-3 sm:mt-6 sm:flex-row sm:justify-center">
+              <Link
+                href="/template"
+                className="inline-flex items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-fuel-orange to-fuel-red px-5 py-3 text-base font-semibold text-white shadow-lg transition hover:opacity-90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/60"
+              >
+                View Example Page
+                <svg className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                  <path
+                    fillRule="evenodd"
+                    d="M10.22 3.22a.75.75 0 011.06 0l5.5 5.5a.75.75 0 010 1.06l-5.5 5.5a.75.75 0 11-1.06-1.06L14.94 10 10.22 5.28a.75.75 0 010-1.06z"
+                    clipRule="evenodd"
+                  />
+                  <path
+                    fillRule="evenodd"
+                    d="M3 10a.75.75 0 01.75-.75h10.69a.75.75 0 010 1.5H3.75A.75.75 0 013 10z"
+                    clipRule="evenodd"
+                  />
+                </svg>
+              </Link>
             </div>
-          </figcaption>
-        </figure>
-      </Link>
+          </div>
+        </Container>
 
-      {/* Larger CTA below the image */}
-      <div className="mt-6 flex justify-center">
-        <Link
-          href="/template"
-          className="inline-flex items-center gap-2 rounded-xl bg-gradient-to-r from-fuel-orange to-fuel-red px-6 py-3 text-base font-semibold text-white shadow-lg transition hover:opacity-90 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-0 focus-visible:ring-white/60"
-        >
-          View Example Page
-          <svg className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-            <path fillRule="evenodd" d="M10.22 3.22a.75.75 0 011.06 0l5.5 5.5a.75.75 0 010 1.06l-5.5 5.5a.75.75 0 11-1.06-1.06L14.94 10 10.22 5.28a.75.75 0 010-1.06z" clipRule="evenodd" />
-            <path fillRule="evenodd" d="M3 10a.75.75 0 01.75-.75h10.69a.75.75 0 010 1.5H3.75A.75.75 0 013 10z" clipRule="evenodd" />
-          </svg>
-        </Link>
-      </div>
-    </div>
+        <div className="pointer-events-none absolute inset-x-0 bottom-0 h-12 bg-gradient-to-t from-white/5 to-transparent" />
+      </section>
 
-  {/* match the standard bottom sheen into next section */}
-  <div className="pointer-events-none absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-white/5 to-transparent" />
-</section>
-
-
-{/* PROCESS */}
-<Section id="process">
-        <div className="mb-12 text-center">
-          <h2 className="text-sm font-semibold uppercase tracking-widest text-fuel-ember">Process</h2>
-          <h3 className="mb-4 text-4xl font-bold">Your Path to Predictable Growth</h3>
-          <p className="text-lg text-gray-300">
+      {/* PROCESS */}
+      <Section id="process">
+        <div className="mb-10 text-center sm:mb-12">
+          <h2 className="text-xs font-semibold uppercase tracking-widest text-fuel-ember sm:text-sm">Process</h2>
+          <h3 className="mb-3 text-3xl font-bold sm:text-4xl">Your Path to Predictable Growth</h3>
+          <p className="mx-auto max-w-3xl text-base text-gray-300 sm:text-lg">
             An all-in-one system that transforms niche brands into scalable, revenue-driven communities.
           </p>
         </div>
 
-        <div className="grid gap-8 md:grid-cols-3">
+        <div className="grid gap-6 sm:gap-8 md:grid-cols-3">
           {[
-            { icon: Target, title: 'Strategic Offer Design', text: 'Nail your niche by building high ticket offers that convert.' },
-            { icon: Settings, title: 'Automated Backend Systems', text: 'Let a proven sales system do the selling while you create.' },
-            { icon: Zap, title: 'Content-to-Sales Engine', text: 'Start turning views into booked calls.' },
+            { icon: Target, title: 'Strategic Offer Design', text: 'Nail your niche with high-ticket offers that convert.' },
+            { icon: Settings, title: 'Automated Backend Systems', text: 'Let a proven sales system work while you create.' },
+            { icon: Zap, title: 'Content-to-Sales Engine', text: 'Turn views into booked calls consistently.' },
           ].map((item, i) => (
             <motion.div
               key={i}
-              whileHover={{ y: -4 }}
-              className="rounded-2xl border border-white/10 bg-white/[0.06] p-8 backdrop-blur-sm transition hover:border-fuel-ember/50 hover:shadow-[0_10px_40px_-10px_rgba(255,146,72,0.3)]"
+              whileHover={!prefersReducedMotion ? { y: -4 } : undefined}
+              className="rounded-2xl border border-white/10 bg-white/[0.06] p-6 sm:p-8 backdrop-blur-sm transition hover:border-fuel-ember/50 hover:shadow-[0_10px_40px_-10px_rgba(255,146,72,0.3)]"
             >
-              <div className="mb-6 flex h-12 w-12 items-center justify-center rounded-lg bg-gradient-to-r from-fuel-orange to-fuel-red">
+              <div className="mb-5 flex h-12 w-12 items-center justify-center rounded-lg bg-gradient-to-r from-fuel-orange to-fuel-red sm:mb-6">
                 <item.icon className="h-6 w-6 text-white" />
               </div>
-              <h4 className="mb-2 text-xl font-semibold">{item.title}</h4>
+              <h4 className="mb-1.5 text-lg font-semibold sm:text-xl">{item.title}</h4>
               <p className="text-gray-300">{item.text}</p>
             </motion.div>
           ))}
@@ -304,25 +276,22 @@ const InfoFuelWebsite = () => {
 
       {/* SERVICES */}
       <Section id="services">
-        <div className="mb-12 text-center">
-          <h2 className="text-sm font-semibold uppercase tracking-widest text-fuel-ember">What We Provide</h2>
-          <h3 className="mb-5 text-4xl font-bold sm:text-5xl">
+        <div className="mb-10 text-center sm:mb-12">
+          <h2 className="text-xs font-semibold uppercase tracking-widest text-fuel-ember sm:text-sm">What We Provide</h2>
+          <h3 className="mb-3 text-3xl font-bold sm:text-5xl">
             Everything You Need To{' '}
-            <span className="bg-gradient-to-r from-fuel-orange to-fuel-red bg-clip-text text-transparent">
-              Scale Your Brand’s Product
-            </span>
+            <span className="bg-gradient-to-r from-fuel-orange to-fuel-red bg-clip-text text-transparent">Scale Your Product</span>
           </h3>
-          <p className="mx-auto max-w-3xl text-lg text-gray-300">
-            Our trained team covers every core function of a functional revenue engine. No more juggling multiple freelancers or scattered
-            systems.
+          <p className="mx-auto max-w-3xl text-base text-gray-300 sm:text-lg">
+            Our team covers every core function of a revenue engine—no more juggling freelancers or scattered systems.
           </p>
         </div>
 
-        <div className="grid grid-cols-1 gap-8 lg:gap-10 md:grid-cols-2">
+        <div className="grid grid-cols-1 gap-6 sm:gap-8 md:grid-cols-2">
           {[
             {
               title: 'Product Creation',
-              copy: 'Get professional help from industry experts to build an unstoppable high ticket product.',
+              copy: 'Build an unstoppable high-ticket product with expert help.',
               svg: (
                 <path
                   strokeLinecap="round"
@@ -334,7 +303,7 @@ const InfoFuelWebsite = () => {
             },
             {
               title: 'Sales Infrastructure',
-              copy: 'Turn your content straight into revenue with proven funnels backed by an experienced sales team.',
+              copy: 'Turn content into revenue via funnels + trained closers.',
               svg: (
                 <path
                   strokeLinecap="round"
@@ -346,7 +315,7 @@ const InfoFuelWebsite = () => {
             },
             {
               title: 'Join Our Community',
-              copy: 'Gain access to an exclusive network with other driven creators and sales pros to accelerate learning.',
+              copy: 'Learn with driven creators and sales pros—accelerate fast.',
               svg: (
                 <path
                   strokeLinecap="round"
@@ -358,7 +327,7 @@ const InfoFuelWebsite = () => {
             },
             {
               title: 'Backend Automation',
-              copy: 'Operate like a business — let automated sales systems and analytics do the heavy lifting.',
+              copy: 'Operate like a business—systems, analytics, and scale.',
               svg: (
                 <>
                   <path
@@ -374,14 +343,14 @@ const InfoFuelWebsite = () => {
           ].map((card, i) => (
             <div
               key={i}
-              className="relative rounded-2xl border border-white/10 bg-white/[0.06] p-8 backdrop-blur-sm transition hover:border-fuel-ember/50 hover:shadow-[0_10px_40px_-10px_rgba(255,146,72,0.3)]"
+              className="relative rounded-2xl border border-white/10 bg-white/[0.06] p-6 sm:p-8 backdrop-blur-sm transition hover:border-fuel-ember/50 hover:shadow-[0_10px_40px_-10px_rgba(255,146,72,0.3)]"
             >
-              <div className="mb-6 flex h-16 w-16 items-center justify-center rounded-full bg-gradient-to-br from-fuel-orange to-fuel-red shadow-[0_0_30px_-8px_rgba(230,57,70,0.7)]">
+              <div className="mb-5 flex h-14 w-14 items-center justify-center rounded-full bg-gradient-to-br from-fuel-orange to-fuel-red shadow-[0_0_30px_-8px_rgba(230,57,70,0.7)] sm:mb-6">
                 <svg className="h-8 w-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   {card.svg}
                 </svg>
               </div>
-              <h4 className="mb-3 text-2xl font-bold">{card.title}</h4>
+              <h4 className="mb-2 text-xl font-bold">{card.title}</h4>
               <p className="text-gray-300">{card.copy}</p>
             </div>
           ))}
@@ -390,27 +359,28 @@ const InfoFuelWebsite = () => {
 
       {/* HOW */}
       <Section id="how">
-        <div className="grid items-start gap-16 lg:grid-cols-2">
-          <div className="lg:sticky lg:top-28">
-            <h2 className="mb-3 text-sm font-semibold uppercase tracking-widest text-fuel-ember">How Do We Do It?</h2>
-            <h3 className="mb-5 text-4xl font-bold leading-tight sm:text-5xl">
+        <div className="grid items-start gap-10 lg:grid-cols-2 lg:gap-16">
+          <div>
+            <h2 className="mb-2 text-xs font-semibold uppercase tracking-widest text-fuel-ember sm:text-sm">
+              How Do We Do It?
+            </h2>
+            <h3 className="mb-4 text-3xl font-bold leading-tight sm:text-5xl">
               From Reels to Real Profit{' '}
               <span className="block bg-gradient-to-r from-fuel-orange to-fuel-red bg-clip-text text-transparent">
                 We Streamline the Entire Process
               </span>
             </h3>
-            <p className="mb-6 text-lg text-gray-300">
-              We install the entire customer journey from lead generation to backend systems to trained closers - all under
-              one roof.
+            <p className="mb-5 text-base text-gray-300 sm:mb-6 sm:text-lg">
+              We install the entire customer journey—lead gen to systems to trained closers—under one roof.
             </p>
-            <p className="text-base font-medium text-fuel-ember">
+            <p className="text-sm font-medium text-fuel-ember sm:text-base">
               Turn your creative passion into predictable profit with our proven 3-phase system.
             </p>
 
-            <div className="mt-8 hidden lg:block">
+            <div className="mt-6 hidden lg:block">
               <a
                 href="#book-call"
-                className="inline-flex items-center rounded-full bg-gradient-to-r from-fuel-orange to-fuel-red px-8 py-4 font-semibold text-white shadow-[0_10px_30px_-10px_rgba(230,57,70,0.6)] transition hover:opacity-90"
+                className="inline-flex items-center rounded-full bg-gradient-to-r from-fuel-orange to-fuel-red px-6 py-3 font-semibold text-white shadow-[0_10px_30px_-10px_rgba(230,57,70,0.6)] transition hover:opacity-90"
               >
                 Interested? Book a Call
                 <ChevronRight className="ml-2 h-5 w-5" />
@@ -418,47 +388,46 @@ const InfoFuelWebsite = () => {
             </div>
           </div>
 
-          <div className="relative space-y-10">
-            <div className="absolute -left-6 top-0 bottom-0 hidden w-px bg-gradient-to-b from-fuel-red via-fuel-ember to-fuel-red opacity-40 lg:block" />
+          <div className="space-y-6 sm:space-y-8">
             {[
               {
                 num: 1,
                 title: 'LEARN',
                 copy:
-                  'We help create or refine your offer using proven methods from industry experts. Learn the basics of online marketing and join an exclusive community of engaged creators to fuel your inspiration.',
+                  'We refine your offer with proven methods. Learn the basics of online marketing and join a community to fuel your inspiration.',
               },
               {
                 num: 2,
                 title: 'BUILD',
                 copy:
-                  'We hire and onboard a custom sales team aligned to your offer and implement professional and automated sales funnels with analytics to track what matters.',
+                  'We hire/onboard a custom sales team and implement professional, automated funnels with analytics.',
               },
               {
                 num: 3,
                 title: 'OPERATION',
                 copy:
-                  'We manage your sales team and use data to identify and fix weak spots in the system. Follow a systemized growth model to predictably increase revenue month over month.',
+                  'We manage the team and use data to improve weak spots. Follow a systemized model to grow revenue predictably.',
               },
             ].map(step => (
               <div key={step.num} className="relative">
-                <div className="flex items-start gap-5">
+                <div className="flex items-start gap-4">
                   <div className="relative shrink-0">
-                    <div className="flex h-14 w-14 items-center justify-center rounded-full border-4 border-black bg-gradient-to-br from-fuel-orange to-fuel-red shadow-lg">
-                      <span className="text-xl font-bold text-white">{step.num}</span>
+                    <div className="flex h-12 w-12 items-center justify-center rounded-full border-4 border-black bg-gradient-to-br from-fuel-orange to-fuel-red shadow-lg sm:h-14 sm:w-14">
+                      <span className="text-lg font-bold text-white sm:text-xl">{step.num}</span>
                     </div>
                   </div>
-                  <div className="flex-1 rounded-xl border border-white/10 bg-white/[0.06] p-6 backdrop-blur-sm transition hover:border-fuel-ember/50 hover:shadow-[0_10px_40px_-10px_rgba(255,146,72,0.3)]">
-                    <h4 className="mb-2 text-2xl font-bold text-fuel-ember">{step.title}</h4>
+                  <div className="flex-1 rounded-xl border border-white/10 bg-white/[0.06] p-5 sm:p-6 backdrop-blur-sm transition hover:border-fuel-ember/50 hover:shadow-[0_10px_40px_-10px_rgba(255,146,72,0.3)]">
+                    <h4 className="mb-1 text-lg font-bold text-fuel-ember sm:text-2xl">{step.title}</h4>
                     <p className="text-gray-300">{step.copy}</p>
                   </div>
                 </div>
               </div>
             ))}
 
-            <div className="pt-4 lg:hidden">
+            <div className="pt-2 lg:hidden">
               <a
                 href="#book-call"
-                className="inline-flex items-center rounded-full bg-gradient-to-r from-fuel-orange to-fuel-red px-8 py-4 font-semibold text-white shadow-[0_10px_30px_-10px_rgba(230,57,70,0.6)] transition hover:opacity-90"
+                className="inline-flex w-full items-center justify-center rounded-full bg-gradient-to-r from-fuel-orange to-fuel-red px-6 py-3 font-semibold text-white shadow-[0_10px_30px_-10px_rgba(230,57,70,0.6)] transition hover:opacity-90"
               >
                 Start Building Your Empire
                 <ChevronRight className="ml-2 h-5 w-5" />
@@ -470,29 +439,31 @@ const InfoFuelWebsite = () => {
 
       {/* RESULTS */}
       <Section id="results">
-        <div className="mb-12 text-center">
-          <h2 className="text-sm font-semibold uppercase tracking-widest text-fuel-ember">Results</h2>
-          <h3 className="mb-4 text-4xl font-bold">Turning your reels into real profit</h3>
-          <p className="text-lg text-gray-300">Our creators go from constant burnout to managing predictable revenue streams.</p>
+        <div className="mb-10 text-center sm:mb-12">
+          <h2 className="text-xs font-semibold uppercase tracking-widest text-fuel-ember sm:text-sm">Results</h2>
+          <h3 className="mb-3 text-3xl font-bold sm:text-4xl">Turning your reels into real profit</h3>
+          <p className="text-base text-gray-300 sm:text-lg">
+            Our creators go from burnout to predictable revenue streams.
+          </p>
         </div>
 
-        <div className="grid grid-cols-2 gap-8 text-center md:grid-cols-4">
+        <div className="grid grid-cols-2 gap-4 text-center sm:gap-6 md:grid-cols-4">
           {[
             { label: 'Cash Collected', value: `$${Math.round(counters.cash)}K+`, grad: true },
             { label: 'Extra Leads Generated', value: `${Math.round(counters.leads).toLocaleString()}+` },
             { label: 'Deals Closed', value: `${Math.round(counters.deals)}+` },
             { label: 'Years Of Operating', value: `${Math.round(counters.years)}+` },
           ].map((stat, i) => (
-            <div key={i} className="rounded-2xl border border-white/10 bg-white/[0.06] p-6 backdrop-blur-sm">
+            <div key={i} className="rounded-2xl border border-white/10 bg-white/[0.06] p-5 sm:p-6 backdrop-blur-sm">
               <div
                 className={
-                  'mb-1 text-4xl font-bold ' +
+                  'mb-1 text-2xl font-bold sm:text-3xl ' +
                   (stat.grad ? 'bg-gradient-to-r from-fuel-orange to-fuel-red bg-clip-text text-transparent' : 'text-white')
                 }
               >
                 {stat.value}
               </div>
-              <div className="text-gray-300">{stat.label}</div>
+              <div className="text-xs text-gray-300 sm:text-sm">{stat.label}</div>
             </div>
           ))}
         </div>
@@ -500,18 +471,18 @@ const InfoFuelWebsite = () => {
 
       {/* TEAM */}
       <Section id="team">
-        <div className="mb-12 text-center">
-          <h2 className="text-sm font-semibold uppercase tracking-widest text-fuel-ember">Our Team</h2>
-          <h3 className="mb-4 text-4xl font-bold">Meet the Minds Fueling Growth</h3>
+        <div className="mb-10 text-center sm:mb-12">
+          <h2 className="text-xs font-semibold uppercase tracking-widest text-fuel-ember sm:text-sm">Our Team</h2>
+          <h3 className="mb-3 text-3xl font-bold sm:text-4xl">Meet the Minds Fueling Growth</h3>
         </div>
-        <div className="mx-auto grid max-w-5xl gap-8 md:grid-cols-3">
+        <div className="mx-auto grid max-w-5xl gap-8 sm:gap-10 md:grid-cols-3">
           {[
             { name: 'Cory Braun', role: 'Sales', image: '/team-ceo.png' },
             { name: 'Logan Duff', role: 'Backend Development', image: '/team-cso.png' },
             { name: 'Deonne Wade', role: 'Copywriter', image: '/team-coo.png' },
           ].map((m, i) => (
-            <motion.div key={i} whileHover={{ y: -4 }} className="text-center">
-              <div className="mx-auto mb-5 h-56 w-56 overflow-hidden rounded-full ring-4 ring-white/10 shadow-[0_10px_40px_-10px_rgba(255,146,72,0.25)]">
+            <motion.div key={i} whileHover={!prefersReducedMotion ? { y: -4 } : undefined} className="text-center">
+              <div className="mx-auto mb-4 h-44 w-44 overflow-hidden rounded-full ring-4 ring-white/10 shadow-[0_10px_40px_-10px_rgba(255,146,72,0.25)] sm:h-56 sm:w-56">
                 <Image
                   src={m.image}
                   alt={m.name}
@@ -521,8 +492,8 @@ const InfoFuelWebsite = () => {
                   priority={i === 0}
                 />
               </div>
-              <h4 className="text-lg font-semibold">{m.name}</h4>
-              <p className="text-gray-300">{m.role}</p>
+              <h4 className="text-base font-semibold sm:text-lg">{m.name}</h4>
+              <p className="text-sm text-gray-300 sm:text-base">{m.role}</p>
             </motion.div>
           ))}
         </div>
@@ -530,56 +501,54 @@ const InfoFuelWebsite = () => {
 
       {/* BOOK A CALL */}
       <Section id="book-call">
-  <div className="mx-auto w-full max-w-7xl px-4 lg:px-8">
-    <h2 className="mb-4 text-center text-4xl font-bold">
-      <span className="bg-gradient-to-r from-fuel-orange to-fuel-red bg-clip-text text-transparent">
-        Let’s Build Your Growth Engine
-      </span>
-    </h2>
-    <p className="mb-10 text-center text-lg text-gray-300">
-      Book a free strategy call with us to discuss how InfoFuel can install the systems, sales, and structure your brand needs.
-    </p>
+        <div className="mx-auto w-full max-w-7xl">
+          <h2 className="mb-3 text-center text-3xl font-bold sm:text-4xl">
+            <span className="bg-gradient-to-r from-fuel-orange to-fuel-red bg-clip-text text-transparent">
+              Let’s Build Your Growth Engine
+            </span>
+          </h2>
+          <p className="mb-6 text-center text-base text-gray-300 sm:mb-8 sm:text-lg">
+            Book a free strategy call to see how InfoFuel can install the systems, sales, and structure your brand needs.
+          </p>
 
-    {/* Full-width Cal embed */}
-    <CalEmbed calLink="infofuel.ca/30min" height="620px" />
+          {/* Full-width, responsive height embed */}
+          <CalEmbed calLink="infofuel.ca/30min" height="560px" />
 
-    <p className="mt-4 text-center text-sm text-gray-400">
-      Having trouble?{" "}
-      <a
-        href="https://cal.com/infofuel.ca/30min"
-        className="underline hover:text-white"
-        target="_blank"
-        rel="noreferrer"
-      >
-        Open Cal.com in a new tab
-      </a>
-    </p>
-  </div>
-</Section>
+          <p className="mt-4 text-center text-xs text-gray-400 sm:text-sm">
+            Having trouble?{' '}
+            <a
+              href="https://cal.com/infofuel.ca/30min"
+              className="underline hover:text-white"
+              target="_blank"
+              rel="noreferrer"
+            >
+              Open Cal.com in a new tab
+            </a>
+          </p>
+        </div>
+      </Section>
+
       {/* FOOTER */}
-      <footer className="relative overflow-hidden border-t border-white/[0.06] py-16">
+      <footer className="relative overflow-hidden border-t border-white/[0.06] py-12 sm:py-16">
         <Container>
-          <div className="grid gap-12 md:grid-cols-4">
+          <div className="grid gap-10 sm:gap-12 md:grid-cols-4">
             <div>
-              <h3 className="bg-gradient-to-r from-fuel-orange to-fuel-red bg-clip-text text-3xl font-bold text-transparent">
+              <h3 className="bg-gradient-to-r from-fuel-orange to-fuel-red bg-clip-text text-2xl font-bold text-transparent sm:text-3xl">
                 InfoFuel
               </h3>
-              <p className="mt-4 text-gray-300">
-                We fuel small businesses and creators with proven systems that ignite growth and turn brands into profitable revenue streams.
+              <p className="mt-3 text-sm text-gray-300 sm:mt-4 sm:text-base">
+                We fuel small businesses and creators with systems that ignite growth and turn brands into profitable revenue
+                streams.
               </p>
             </div>
             <div>
-              <h4 className="mb-3 font-semibold text-white">Navigation</h4>
+              <h4 className="mb-2 font-semibold text-white sm:mb-3">Navigation</h4>
               <div className="space-y-2 text-gray-300">
-                {['Process', 'What We Do', 'How We Do It', 'Results', 'Team'].map((item, i) => (
+                {['Process', 'Services', 'How', 'Results', 'Team'].map((item, i) => (
                   <button
                     key={i}
-                    onClick={() =>
-                      scrollToSection(
-                        item.toLowerCase().replaceAll(' ', '-').replace('what-we-do', 'services').replace('how-we-do-it', 'how'),
-                      )
-                    }
-                    className="block text-left transition hover:text-white"
+                    onClick={() => scrollToSection(item.toLowerCase())}
+                    className="block w-full text-left text-sm transition hover:text-white"
                   >
                     {item}
                   </button>
@@ -587,8 +556,8 @@ const InfoFuelWebsite = () => {
               </div>
             </div>
             <div>
-              <h4 className="mb-3 font-semibold text-white">Services</h4>
-              <div className="space-y-2 text-gray-300">
+              <h4 className="mb-2 font-semibold text-white sm:mb-3">Services</h4>
+              <div className="space-y-2 text-gray-300 text-sm">
                 <div>Offer Strategy</div>
                 <div>Sales Funnels</div>
                 <div>Marketing Ecosystem</div>
@@ -596,33 +565,33 @@ const InfoFuelWebsite = () => {
               </div>
             </div>
             <div>
-              <h4 className="mb-3 font-semibold text-white">Ready to Start?</h4>
+              <h4 className="mb-2 font-semibold text-white sm:mb-3">Ready to Start?</h4>
               <button
                 onClick={() => scrollToSection('book-call')}
-                className="rounded-lg bg-white px-6 py-3 font-medium text-fuel-orange shadow transition hover:bg-gray-100"
+                className="w-full rounded-lg bg-white px-5 py-3 text-sm font-medium text-fuel-orange shadow transition hover:bg-gray-100 sm:w-auto"
               >
                 Book a Call →
               </button>
             </div>
           </div>
 
-          <div className="mt-12 flex flex-col items-center justify-between gap-4 border-t border-white/[0.06] pt-6 text-sm text-gray-300 md:flex-row">
+          <div className="mt-10 flex flex-col items-center justify-between gap-4 border-t border-white/[0.06] pt-5 text-xs text-gray-300 sm:mt-12 sm:flex-row sm:text-sm">
             <span>© 2025 InfoFuel. All rights reserved.</span>
             <div className="flex gap-6">
-              <a href="#" className="transition hover:text-white">
+              <a href="/privacy-policy" className="transition hover:text-white">
                 Privacy Policy
               </a>
-              <a href="#" className="transition hover:text-white">
+              <a href="/terms-of-service" className="transition hover:text-white">
                 Terms of Service
               </a>
             </div>
           </div>
         </Container>
 
-        {/* footer glow anchors the page end, keeps it seamless */}
+        {/* footer glow */}
         <div
-          className="pointer-events-none absolute inset-x-0 -bottom-40 mx-auto h-[28rem] w-[28rem] rounded-full blur-[120px] opacity-20"
-          style={{ background: 'radial-gradient(closest-side, rgba(255,146,72,0.35), transparent)' }}
+          className="pointer-events-none absolute inset-x-0 -bottom-32 mx-auto h-[20rem] w-[20rem] rounded-full blur-[100px] opacity-20 sm:h-[24rem] sm:w-[24rem]"
+          style={{ background: 'radial-gradient(closest-side, rgba(255,146,72,0.32), transparent)' }}
         />
       </footer>
     </div>
@@ -630,3 +599,4 @@ const InfoFuelWebsite = () => {
 };
 
 export default InfoFuelWebsite;
+

@@ -74,10 +74,6 @@ export default function BrandScalingStructure() {
 
       {/* HERO (structure: headline + subhead stacked, single column on mobile) */}
       <Section id="Your VSL">
-          {/* match section blends used elsewhere */}
-  <div className="pointer-events-none absolute inset-0 bg-embers opacity-[0.16]" />
-  <div className="pointer-events-none absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-white/5 to-transparent" />
-
   <div className="relative z-10 mx-auto max-w-6xl px-6 lg:px-8">
     {/* Hero Section */}
   </div>
@@ -99,11 +95,10 @@ export default function BrandScalingStructure() {
             </div>
           </div> 
           <div className="mt-10"> </div>
-          <div className="mx-auto max-w-3xl text-center">
-          <a className="text-2xl uppercase tracking-wider text-fuel-ember" href="#Sign Up For Customers">Sign Up</a>
+          <div className="mt-6 flex items-center justify-center">
+            <a href="#book" className="rounded-lg bg-gradient-to-r from-orange-400 to-red-500 px-6 py-3 font-semibold text-white hover:opacity-90">Sign Up</a>
           </div>
         </div>
-        <div className="mt-20"> </div>
       </Section>
 
 
@@ -111,32 +106,42 @@ export default function BrandScalingStructure() {
       {/* "HERE'S WHAT YOU'LL DISCOVER" (structure: title + 3 stacked bullet items) */}
       <Section id="What You Will Povide">
           {/* match section blends used elsewhere */}
-  <div className="pointer-events-none absolute inset-x-0 top-0 h-16 bg-gradient-to-b from-white/5 to-transparent" />
   <div className="pointer-events-none absolute inset-0 bg-embers opacity-[0.16]" />
   <div className="pointer-events-none absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-white/5 to-transparent" />
 
   <div className="relative z-10 mx-auto max-w-6xl px-6 lg:px-8">
     {/* Discover Section */}
   </div>
-  <div className="mt-20"> </div>
         <div className="mx-auto max-w-3xl text-center">
           <h2 className="text-2xl font-bold sm:text-3xl">Discover</h2>
           <p className="mt-3 text-gray-300">Key Takeaways from your offer</p>
         </div>
         <div className="mx-auto mt-8 max-w-3xl space-y-4">
-          {[0, 1, 2].map((i) => (
-            <div key={i} className="flex items-start gap-3 rounded-xl border border-white/10 bg-white/[0.04] p-5">
-              <div className="mt-1 h-2 w-2 shrink-0 rounded-full bg-gradient-to-r from-orange-400 to-red-500" />
-              <p className="text-gray-200">test</p>
-            </div>
-          ))}
-        </div>
-        <div className="mt-20"> </div>
+  {/* Panel 1 */}
+  <div className="flex items-start gap-3 rounded-xl border border-white/10 bg-white/[0.04] p-5">
+    <div className="mt-1 h-2 w-2 shrink-0 rounded-full bg-gradient-to-r from-orange-400 to-red-500" />
+    <p className="text-gray-200">Investing Course Eg. You’ll master the core principles of financial analysis — balance sheets, cash flow, and earnings — so you can spot companies with true staying power versus those built on hype.</p>
+  </div>
+
+  {/* Panel 2 */}
+  <div className="flex items-start gap-3 rounded-xl border border-white/10 bg-white/[0.04] p-5">
+    <div className="mt-1 h-2 w-2 shrink-0 rounded-full bg-gradient-to-r from-orange-400 to-red-500" />
+    <p className="text-gray-200">Public Speaking Course Eg. You’ll be guided through rehearsal methods that mimic real-world conditions, ensuring that when it’s time to perform, you feel prepared, polished, and unstoppable.</p>
+  </div>
+
+  {/* Panel 3 */}
+  <div className="flex items-start gap-3 rounded-xl border border-white/10 bg-white/[0.04] p-5">
+    <div className="mt-1 h-2 w-2 shrink-0 rounded-full bg-gradient-to-r from-orange-400 to-red-500" />
+    <p className="text-gray-200">How to Run a Startup Eg. We’ll teach you lean, effective marketing strategies — from social media to word-of-mouth — that bring in your first customers without needing a corporate-sized budget.</p>
+  </div>
+</div>
+
+<div className="mt-20" />
 
     {/* Label / Title / Subtitle (same pattern as other sections) */}
     <div className="text-center">
-      <h2 className="mt-4 text-3xl font-extrabold tracking-tight sm:text-4xl">Modern Themes Young Adults Love</h2>
-      <p className="mt-2 text-base text-gray-300 sm:text-lg">Four vibe-tested looks you can apply to your landing page in minutes.</p>
+      <h2 className="mt-4 text-3xl font-extrabold tracking-tight sm:text-4xl">Unlimited Designs</h2>
+      <p className="mt-2 text-base text-gray-300 sm:text-lg">We can incorporate any design you like or choose from a catalogue of styles</p>
     </div>
 
     {/* 4 Glass Panels */}
